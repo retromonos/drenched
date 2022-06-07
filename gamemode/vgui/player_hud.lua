@@ -72,14 +72,18 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
             end
         end
 
-        draw.SimpleText(pl:GetAmmoCount("water") .. " mL", "Drenched24", left_margin+hpwide+4, bottom_margin+(hptall/2) - 4, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+        draw.SimpleText(pl:GetAmmoCount("water") .. " mL", "Drenched24", left_margin+hpwide+4, bottom_margin+(hptall/2) - 4, ((pl:GetAmmoCount("water") >= math.min(wep.AmmoUsage,2)) and Color(255,255,255)) or Color(200,200,200), TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
        
         
         
-        --draw.SimpleText(wep.PrintName, "Drenched24", left_margin+hpwide+4, bottom_margin+(hptall/2) + 4, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
-        draw.SimpleText(math.Round(wep:GetPressure()*100,1) .. "% Pressure", "Drenched24", left_margin+hpwide+4, bottom_margin+(hptall/2) + 4, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
-        if wep:GetPressure() <= 0.5 then
-            draw.SimpleText("RELOAD to Pump!", "Drenched18", left_margin+hpwide+4, bottom_margin+(hptall/2) + 28, Color(200,200,200,255*math.abs(math.sin(CurTime()*4))), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+       
+        if not wep.NoPressure then
+            draw.SimpleText(math.Round(wep:GetPressure()*(wep.Velocity/16),1) .. " psi", "Drenched24", left_margin+hpwide+4, bottom_margin+(hptall/2) + 4, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+            if wep:GetPressure() <= 0.5 then
+                draw.SimpleText("RELOAD to Pump!", "Drenched18", left_margin+hpwide+4, bottom_margin+(hptall/2) + 28, Color(200,200,200,255*math.abs(math.sin(CurTime()*4))), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+            end
+        else
+            draw.SimpleText(wep.PrintName, "Drenched24", left_margin+hpwide+4, bottom_margin+(hptall/2) + 4, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
         end
 
         local x = ScrW() * 0.5

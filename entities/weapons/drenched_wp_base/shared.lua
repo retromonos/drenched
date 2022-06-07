@@ -32,6 +32,8 @@ SWEP.PumpDelay = 0.1
 SWEP.PressureDrain = 0.025
 SWEP.MinimumPressure = 0.25
 
+SWEP.NoPressure = false
+
 SWEP.CSMuzzleFlashes = false
 
 SWEP.RefillRate = 50 // ticks of refill per second
@@ -75,7 +77,7 @@ function SWEP:ShootBullets(damage, numshots, cone)
             local ent = ents.Create(self.Projectile)
             if ent:IsValid() then
 
-                local shootpos = owner:GetShootPos() + (owner:GetRight()*12) + (owner:GetUp()*-6) +  (owner:GetForward()*10)
+                local shootpos = owner:GetShootPos() + (owner:GetRight()*10) + (owner:GetUp()*-6) +  (owner:GetForward()*10)
 
                 ent:SetPos(shootpos)
                 ent:SetAngles(owner:EyeAngles())
@@ -195,6 +197,28 @@ function SWEP:Think()
     else
         self.JetpackSound:Stop()
     end
+end
+
+function SWEP:FireAnimationEvent( _pos, _ang, _event, _options )
+
+	if string.find( self.ViewModel, 'models/weapons/cstrike/' ) then
+		--firstperson css muzzle flashes
+		if ( _event == 20 ) then return true end
+		if ( _event == 5001 ) then return true end
+			
+			--print('Is CSS! = true')
+	else
+		--firstperson hl2 muzzle flashes
+		if ( _event == 21 ) then return true end
+		if ( _event == 6001 ) then return true end
+			
+			--print('Is Hl2! = true')
+	end
+		
+	--thirdperson muzzle flashes both hl2/css
+	if ( _event == 22 ) then return true end
+	if ( _event == 5003 ) then return true end
+    
 end
 
 function SWEP:DoRefill(owner)

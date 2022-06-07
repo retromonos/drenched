@@ -14,6 +14,7 @@ function GM:PlayerSpawn( ply )
 	ply:GiveAmmo(self.TankSize, "water", true)
 	ply:Give("drenched_wp_soaker")
 	ply:Give("drenched_wp_drizzle")
+	ply:Give("drenched_wp_noodle")
 
     ply:SetModel("models/player/alyx.mdl")
 	ply:SetupHands() 
