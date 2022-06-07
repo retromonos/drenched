@@ -1,6 +1,6 @@
 SWEP.Base = "drenched_wp_base"
 
-SWEP.PrintName = "Drizzle LW-300"		
+SWEP.PrintName = "Drizzle LW-270"		
 
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
@@ -23,12 +23,13 @@ if CLIENT then
 	}
 end
 
-SWEP.Primary.Delay = 0.2
+SWEP.Primary.Delay = 0.225
 SWEP.Primary.Damage = 20
-SWEP.Cone = 3 // in degrees of deviation
-SWEP.AmmoUsage = 4
+SWEP.Cone = 1.5 // in degrees of deviation
+SWEP.AmmoUsage = 5
 SWEP.FireSound = "weapons/ar2/fire1.wav"
 
 SWEP.Velocity = 2000
+SWEP.PressureDrain = 0.05
 
-SWEP.Zoom = 1.1
+SWEP.Zoom = 1.3

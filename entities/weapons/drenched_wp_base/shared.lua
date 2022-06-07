@@ -27,6 +27,11 @@ SWEP.Projectile = "proj_basewater"
 SWEP.Velocity = 1000
 SWEP.Gravity = true
 
+SWEP.PumpAmount = 0.05
+SWEP.PumpDelay = 0.1
+SWEP.PressureDrain = 0.025
+SWEP.MinimumPressure = 0.25
+
 SWEP.CSMuzzleFlashes = false
 
 SWEP.RefillRate = 50 // ticks of refill per second
@@ -48,6 +53,8 @@ function SWEP:Initialize()
     if CLIENT then
 		self:Anim_Initialize()
 	end
+    
+    self:SetPressure(1)
 
     self.JetpackSound = CreateSound(self, "ambient/levels/canals/dam_water_loop2.wav")
 end
@@ -67,7 +74,10 @@ function SWEP:ShootBullets(damage, numshots, cone)
         for i = 0,numshots-1 do
             local ent = ents.Create(self.Projectile)
             if ent:IsValid() then
-                ent:SetPos(owner:GetShootPos())
+
+                local shootpos = owner:GetShootPos() + (owner:GetRight()*12) + (owner:GetUp()*-6) +  (owner:GetForward()*10)
+
+                ent:SetPos(shootpos)
                 ent:SetAngles(owner:EyeAngles())
                 ent:SetOwner(owner)
                 ent.ProjDamage = self.Primary.Damage
@@ -86,7 +96,7 @@ function SWEP:ShootBullets(damage, numshots, cone)
                     angle:RotateAroundAxis(angle:Forward(), math.Rand(0, 360))
                     angle:RotateAroundAxis(angle:Up(), math.Rand(-cone, cone))
 
-                    ent.PreVel = angle:Forward() * self.Velocity
+                    ent.PreVel = angle:Forward() * (self.Velocity * self:GetPressure())
                     phys:SetVelocityInstantaneous(ent.PreVel)
                 end
             end
@@ -104,6 +114,8 @@ function SWEP:PrimaryAttack()
 
     self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
     self:SetRefillStart(CurTime() + GAMEMODE.WaterRefillDelay)
+    
+    self:SetPressure(math.max(self:GetPressure() - self.PressureDrain,self.MinimumPressure))
 
     self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 end
@@ -142,6 +154,13 @@ function SWEP:Think()
         self:SetZoomed(true)
     else
         self:SetZoomed(false)
+    end
+
+    if owner:KeyPressed(IN_RELOAD) and (self:GetNextPump() <= CurTime()) and self:GetPressure() < 1 then
+        self:SetPressure(math.min(self:GetPressure() + self.PumpAmount,1))
+        self:SetNextPump(CurTime() + self.PumpDelay)
+        self:EmitSound("weapons/crossbow/fire1.wav",75,50+(self:GetPressure()*30),0.8)
+        self:SetNextPrimaryFire(CurTime()+0.5)
     end
 
     if self:GetZoomed() then
@@ -194,13 +213,17 @@ function SWEP:CanSecondaryAttack()
 	return false
 end
 
+function SWEP:Reload()
+end
+
 function SWEP:GetCone()
+    --((self:GetZoomed() and 0.5) or 1)
     local convertedcone = self.Cone * (math.pi/180)
-    return convertedcone * ((self:GetZoomed() and 0.5) or 1)
+    return convertedcone * (1/self:GetPressure())
 end
 
 function SWEP:GetConeDeg()
-    return self.Cone * ((self:GetZoomed() and 0.5) or 1)
+    return self.Cone * (1/self:GetPressure())
 end
 
 function SWEP:SetRefillStart(time)
@@ -218,6 +241,24 @@ end
 function SWEP:GetNextRefill()
     return self:GetDTFloat(1)
 end
+
+
+function SWEP:GetNextPump()
+    return self:GetDTFloat(2)
+end
+
+function SWEP:SetNextPump(time)
+    self:SetDTFloat(2,time)
+end
+
+function SWEP:GetPressure()
+    return self:GetDTFloat(3)
+end
+
+function SWEP:SetPressure(amount)
+    self:SetDTFloat(3,amount)
+end
+
 
 function SWEP:SetRefilling(bool)
     self:SetDTBool(0,bool)

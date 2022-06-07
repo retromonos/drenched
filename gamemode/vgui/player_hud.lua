@@ -75,8 +75,12 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
        
         
         
-        draw.SimpleText(wep.PrintName, "Drenched24", left_margin+hpwide+4, bottom_margin+(hptall/2) + 4, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
-        
+        --draw.SimpleText(wep.PrintName, "Drenched24", left_margin+hpwide+4, bottom_margin+(hptall/2) + 4, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+        draw.SimpleText(math.Round(wep:GetPressure()*100,1) .. "% Pressure", "Drenched24", left_margin+hpwide+4, bottom_margin+(hptall/2) + 4, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+        if wep:GetPressure() <= 0.5 then
+            draw.SimpleText("RELOAD to Pump!", "Drenched18", left_margin+hpwide+4, bottom_margin+(hptall/2) + 28, Color(200,200,200,255*math.abs(math.sin(CurTime()*4))), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+        end
+
         local x = ScrW() * 0.5
         local y = ScrH() * 0.5
                 
@@ -116,7 +120,7 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
     if not GAMEMODE.RoundOver then
         local plural = (pl:Frags() == 1 and "") or "s"
 
-        draw.SimpleText(pl:Frags() .. " Kill" .. plural, "Drenched36", ScrW()/2, ScrH()/8, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText(pl:Frags() .. "/" .. GAMEMODE.WinFrags .. " Kill" .. plural, "Drenched36", ScrW()/2, ScrH()/8, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 
 end )

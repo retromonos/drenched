@@ -35,10 +35,13 @@ end
 SWEP.Primary.Delay = 0.075
 SWEP.Primary.Damage = 6.5
 SWEP.Primary.NumShots = 2
-SWEP.Cone = 5 // in degrees of deviation
+SWEP.Cone = 3 // in degrees of deviation
 SWEP.AmmoUsage = 4
 SWEP.FireSound = "weapons/ar2/fire1.wav"
 
 SWEP.Zoom = 1.1
 
-SWEP.Velocity = 900
+SWEP.PressureDrain = 0.015
+SWEP.MinimumPressure = 0.35
+
+SWEP.Velocity = 1100

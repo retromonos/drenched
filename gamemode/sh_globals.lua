@@ -1,3 +1,3 @@
-GM.WaterRefillDelay = 2
+GM.WaterRefillDelay = 1.5
 GM.TankSize = 750
-GM.WinFrags = 5
+GM.WinFrags = 15
