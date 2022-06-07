@@ -156,9 +156,8 @@ function SWEP:Think()
         self:SetZoomed(false)
     end
 
-    if owner:KeyPressed(IN_RELOAD) and (self:GetNextPump() <= CurTime()) and self:GetPressure() < 1 then
+    if owner:KeyPressed(IN_RELOAD) and self:GetPressure() < 1 then
         self:SetPressure(math.min(self:GetPressure() + self.PumpAmount,1))
-        self:SetNextPump(CurTime() + self.PumpDelay)
         self:EmitSound("weapons/crossbow/fire1.wav",75,50+(self:GetPressure()*30),0.8)
         self:SetNextPrimaryFire(CurTime()+0.5)
     end
@@ -240,15 +239,6 @@ end
 
 function SWEP:GetNextRefill()
     return self:GetDTFloat(1)
-end
-
-
-function SWEP:GetNextPump()
-    return self:GetDTFloat(2)
-end
-
-function SWEP:SetNextPump(time)
-    self:SetDTFloat(2,time)
 end
 
 function SWEP:GetPressure()

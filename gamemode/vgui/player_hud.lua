@@ -34,7 +34,8 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
 
     local hpwide = 64
     local hptall = 128
-
+    
+    draw.RoundedBoxEx(32,left_margin, bottom_margin, hpwide+136, hptall, Color(0, 183, 255,100), false, true, false, true)
 	surface.SetDrawColor(255,255,255)
 	surface.DrawRect(left_margin, bottom_margin, hpwide, hptall)
     surface.SetDrawColor(150, 150, 150)
@@ -118,9 +119,7 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
     // **********
 
     if not GAMEMODE.RoundOver then
-        local plural = (pl:Frags() == 1 and "") or "s"
-
-        draw.SimpleText(pl:Frags() .. "/" .. GAMEMODE.WinFrags .. " Kill" .. plural, "Drenched36", ScrW()/2, ScrH()/8, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText(pl:Frags() .. "/" .. GAMEMODE.WinFrags .. " Kills", "Drenched36", ScrW()/2, ScrH()/8, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 
 end )
