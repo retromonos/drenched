@@ -1,0 +1,8 @@
+"drenched"
+{
+	"base"		"base"
+	"title"		"Drenched"
+	"maps"		"^dch_"
+	"category"	"pvp"
+	"menusystem"	"1"
+}
