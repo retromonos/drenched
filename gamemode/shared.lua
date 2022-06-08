@@ -22,7 +22,7 @@ end
 
 function GM:Tick()
 	local allplayers = player.GetAll()
-	table.sort( allplayers, function(a, b) return a:Frags() > b:Frags() end )
+	
 	if allplayers then
 		for i, pl in ipairs(allplayers) do
 		    if (pl:Frags() >= self.WinFrags) and (not self.RoundOver) then
@@ -33,6 +33,7 @@ function GM:Tick()
 		end
 
 		if CurTime() >= self.RoundEnd and (not self.RoundOver) then
+			table.sort( allplayers, function(a, b) return a:Frags() > b:Frags() end )
 			self.RoundOver = true
 			self.Winner = allplayers[1]
 			timer.Simple(5, function() GAMEMODE:RestartGame() end)

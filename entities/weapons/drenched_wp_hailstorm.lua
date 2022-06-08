@@ -1,6 +1,6 @@
 SWEP.Base = "drenched_wp_base"
 
-SWEP.PrintName = "Drizzle LW-270"		
+SWEP.PrintName = "Hailstorm SR-80"		
 
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
@@ -8,8 +8,8 @@ SWEP.ViewModel = "models/weapons/cstrike/c_pist_fiveseven.mdl"
 SWEP.WorldModel = "models/weapons/w_pist_fiveseven.mdl"
 SWEP.HoldType = "pistol"
 
-SWEP.Slot = 1
-SWEP.SlotPos = 0
+SWEP.Slot = 3
+SWEP.SlotPos = 1
 
 if CLIENT then
 	SWEP.ShowViewModel = false
@@ -23,13 +23,17 @@ if CLIENT then
 	}
 end
 
-SWEP.Primary.Delay = 0.225
-SWEP.Primary.Damage = 18
-SWEP.Cone = 1 // in degrees of deviation
-SWEP.AmmoUsage = 6
+SWEP.Primary.Delay = 0.75
+SWEP.Primary.Damage = 60
+SWEP.Cone = 0.5 // in degrees of deviation
+SWEP.AmmoUsage = 5
 SWEP.FireSound = "weapons/ar2/fire1.wav"
 
-SWEP.Velocity = 1700
-SWEP.PressureDrain = 0.08
+SWEP.Velocity = 3500
+SWEP.PumpAmount = 0.035
+SWEP.PumpDelay = 0.025
+SWEP.PressureDrain = 0.85
+SWEP.MinimumPressure = 0.15
+SWEP.AmmoUsage = 40
 
-SWEP.Zoom = 1.3
+SWEP.Zoom = 2
