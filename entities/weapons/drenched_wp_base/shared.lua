@@ -28,7 +28,7 @@ SWEP.Velocity = 1000
 SWEP.Gravity = true
 
 SWEP.PumpAmount = 0.05
-SWEP.PumpDelay = 0.1
+SWEP.PumpDelay = 0.05
 SWEP.PressureDrain = 0.025
 SWEP.MinimumPressure = 0.25
 
@@ -158,9 +158,10 @@ function SWEP:Think()
         self:SetZoomed(false)
     end
 
-    if owner:KeyPressed(IN_RELOAD) and self:GetPressure() < 1 then
+    if owner:KeyPressed(IN_RELOAD) and (self:GetPressure() < 1) and (self:GetNextPump() <= CurTime()) then
         self:SetPressure(math.min(self:GetPressure() + self.PumpAmount,1))
         self:EmitSound("weapons/crossbow/fire1.wav",75,50+(self:GetPressure()*30),0.8)
+        self:SetNextPump(CurTime() + self.PumpDelay)
         self:SetNextPrimaryFire(CurTime()+0.5)
     end
 
@@ -263,6 +264,14 @@ end
 
 function SWEP:GetNextRefill()
     return self:GetDTFloat(1)
+end
+
+function SWEP:SetNextPump(time)
+    self:SetDTFloat(2,time)
+end
+
+function SWEP:GetNextPump()
+    return self:GetDTFloat(2)
 end
 
 function SWEP:GetPressure()

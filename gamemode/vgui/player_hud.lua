@@ -39,9 +39,9 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
 	surface.SetDrawColor(255,255,255)
 	surface.DrawRect(left_margin, bottom_margin, hpwide, hptall)
     surface.SetDrawColor(150, 150, 150)
-    surface.DrawRect(left_margin+4, bottom_margin+4, hpwide-8, hptall-8)
+    surface.DrawRect(left_margin+2, bottom_margin+2, hpwide-4, hptall-4)
     surface.SetDrawColor(0, 183, 255)
-    surface.DrawRect(left_margin+4, (bottom_margin+4)+((hptall-8)*math.abs(1-healthfrac)), hpwide-8, (hptall-8)*healthfrac)
+    surface.DrawRect(left_margin+2, (bottom_margin+2)+((hptall-4)*math.abs(1-healthfrac)), hpwide-4, (hptall-4)*healthfrac)
 
     draw.SimpleText(pl:Health(), "Drenched36", left_margin+(hpwide/2), bottom_margin+(hptall/2), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
@@ -123,7 +123,27 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
     // **********
 
     if not GAMEMODE.RoundOver then
-        draw.SimpleText(pl:Frags() .. "/" .. GAMEMODE.WinFrags .. " Kills", "Drenched36", ScrW()/2, ScrH()/8, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.RoundedBoxEx(32,(ScrW()/2)-300, 0, 600, 40, Color(0, 183, 255,100), false, false, true, true)
+        draw.RoundedBoxEx(32,(ScrW()/2)-58, 40, 116, 60, Color(0, 183, 255,100), false, false, true, true)
+        draw.SimpleText(pl:Name()..": "..pl:Frags(), "Drenched36", (ScrW()/2)-284, 20, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+
+        local players = player.GetAll()
+        table.sort( players, function(a, b) return a:Frags() > b:Frags() end )
+
+        local opposingplayer
+
+        if players[1] == pl then
+            opposingplayer = players[math.min(2,#players)]
+        else
+            opposingplayer = players[1]
+        end
+
+        draw.SimpleText(opposingplayer:Name()..": "..opposingplayer:Frags(), "Drenched36", (ScrW()/2)+284, 20, Color(255,255,255), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(string.ToMinutesSeconds(GAMEMODE.RoundEnd - CurTime()), "Drenched36", (ScrW()/2), 60, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Playing to "..GAMEMODE.WinFrags, "Drenched18", (ScrW()/2), 85, Color(200,200,200), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    
+        surface.SetDrawColor(255,255,255)
+        surface.DrawRect((ScrW()/2)-58, 40, 116, 2)
     end
 
 end )

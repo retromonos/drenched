@@ -4,12 +4,12 @@ GM.Email = "N/A"
 GM.Website = "N/A"
 
 function GM:Initialize()
-	-- Do stuff
+	self.RoundEnd = CurTime() + self.RoundTime
 end
 
 function GM:PlayerSpawn( ply )
-    ply:SetWalkSpeed(350)
-    ply:SetRunSpeed(350)
+    ply:SetWalkSpeed(250)
+    ply:SetRunSpeed(250)
 	ply:RemoveAllAmmo()
 	ply:GiveAmmo(self.TankSize, "water", true)
 	ply:Give("drenched_wp_soaker")
@@ -22,6 +22,7 @@ end
 
 function GM:Tick()
 	local allplayers = player.GetAll()
+	table.sort( allplayers, function(a, b) return a:Frags() > b:Frags() end )
 	if allplayers then
 		for i, pl in ipairs(allplayers) do
 		    if (pl:Frags() >= self.WinFrags) and (not self.RoundOver) then
@@ -30,12 +31,21 @@ function GM:Tick()
 				timer.Simple(5, function() GAMEMODE:RestartGame() end)
 			end
 		end
+
+		if CurTime() >= self.RoundEnd and (not self.RoundOver) then
+			self.RoundOver = true
+			self.Winner = allplayers[1]
+			timer.Simple(5, function() GAMEMODE:RestartGame() end)
+		end
 	end
+
+	
 end
 
 function GM:RestartGame()
 	self.RoundOver = false
 	self.Winner = nil
+	self.RoundEnd = CurTime() + self.RoundTime
 
 	if SERVER then
 		local allplayers = player.GetAll()
