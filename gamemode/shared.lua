@@ -7,18 +7,49 @@ function GM:Initialize()
 	self.RoundEnd = CurTime() + self.RoundTime
 end
 
+function GM:PlayerInitialSpawn(ply)
+	ply.Loadout = {
+		"drenched_wp_soaker",
+		"drenched_wp_drizzle"
+	}
+
+	net.Start("drenched_sendloadout")
+		net.WriteTable(ply.Loadout)
+	net.Send(ply)
+end
+
 function GM:PlayerSpawn( ply )
     ply:SetWalkSpeed(250)
     ply:SetRunSpeed(250)
 	ply:RemoveAllAmmo()
 	ply:GiveAmmo(self.TankSize, "water", true)
-	ply:Give("drenched_wp_soaker")
-	ply:Give("drenched_wp_drizzle")
+
+	for _, wep in pairs(ply.Loadout) do
+		ply:Give(wep)
+	end
+	
 	ply:Give("drenched_wp_noodle")
 
     ply:SetModel("models/player/alyx.mdl")
 	ply:SetupHands() 
 end
+
+hook.Add("EntityTakeDamage", "DamageEffects", function(ent, dmginfo)
+	if ent:IsPlayer() then
+		if dmginfo:GetAttacker():IsPlayer() then
+			net.Start("drenched_hitmarker")
+				net.WriteInt(dmginfo:GetDamage(), 9)
+				net.WriteBool(dmginfo:GetDamage() >= ent:Health())
+				net.WriteString(ent:Name())
+			net.Send(dmginfo:GetAttacker())
+
+			if dmginfo:GetAttacker():GetActiveWeapon().DoHurtFlash then
+				net.Start("drenched_hurtflash")
+				net.Send(ent)
+			end
+		end
+	end
+end)
 
 function GM:Tick()
 	local allplayers = player.GetAll()
@@ -54,9 +85,7 @@ function GM:RestartGame()
 			for i = 1, #allplayers do
 				local pl = allplayers[i]
 
-				pl:Kill()
-				pl:StripWeapons()
-				pl:StripAmmo()
+				pl:Spawn()
 				pl:SetFrags(0)
 				pl:SetDeaths(0)
 			end

@@ -27,8 +27,10 @@ SWEP.Projectile = "proj_basewater"
 SWEP.Velocity = 1000
 SWEP.Gravity = true
 
+SWEP.DoHurtFlash = true
+
 SWEP.PumpAmount = 0.05
-SWEP.PumpDelay = 0.05
+SWEP.PumpDelay = 0.15
 SWEP.PressureDrain = 0.025
 SWEP.MinimumPressure = 0.25
 
@@ -158,7 +160,7 @@ function SWEP:Think()
         self:SetZoomed(false)
     end
 
-    if owner:KeyPressed(IN_RELOAD) and (self:GetPressure() < 1) and (self:GetNextPump() <= CurTime()) then
+    if owner:KeyDown(IN_RELOAD) and (self:GetPressure() < 1) and (self:GetNextPump() <= CurTime()) then
         self:SetPressure(math.min(self:GetPressure() + self.PumpAmount,1))
         self:EmitSound("weapons/crossbow/fire1.wav",75,50+(self:GetPressure()*30),0.8)
         self:SetNextPump(CurTime() + self.PumpDelay)

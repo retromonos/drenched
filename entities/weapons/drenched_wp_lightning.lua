@@ -1,6 +1,6 @@
 SWEP.Base = "drenched_wp_base"
 
-SWEP.PrintName = "Hailstorm SR-80"		
+SWEP.PrintName = "Lightning SR-80"		
 
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
@@ -31,7 +31,6 @@ SWEP.FireSound = "weapons/ar2/fire1.wav"
 
 SWEP.Velocity = 3500
 SWEP.PumpAmount = 0.035
-SWEP.PumpDelay = 0.025
 SWEP.PressureDrain = 0.85
 SWEP.MinimumPressure = 0.15
 SWEP.AmmoUsage = 40

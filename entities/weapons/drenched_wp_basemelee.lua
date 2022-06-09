@@ -26,6 +26,8 @@ SWEP.AmmoUsage = 5
 SWEP.FireSound = "weapons/iceaxe/iceaxe_swing1.wav"
 SWEP.Range = 75
 
+SWEP.DoHurtFlash = false
+
 SWEP.NoPressure = true
 
 SWEP.Zoom = 1

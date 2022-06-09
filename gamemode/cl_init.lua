@@ -1,6 +1,8 @@
 include( "shared.lua" )
 include("sh_globals.lua")
+include("sh_items.lua")
 include("vgui/player_hud.lua")
+include("vgui/loadout_hud.lua")
 
 local basefont = "Trebuchet MS"
 
