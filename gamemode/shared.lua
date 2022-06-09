@@ -4,7 +4,9 @@ GM.Email = "N/A"
 GM.Website = "N/A"
 
 function GM:Initialize()
-	self.RoundEnd = CurTime() + self.RoundTime
+	self.RoundEnd = CurTime() + self.WaitTime
+
+	self.WaitingForPlayers = true
 end
 
 function GM:PlayerInitialSpawn(ply)
@@ -15,6 +17,10 @@ function GM:PlayerInitialSpawn(ply)
 
 	net.Start("drenched_sendloadout")
 		net.WriteTable(ply.Loadout)
+	net.Send(ply)
+
+	net.Start("drenched_synchronizetime")
+		net.WriteFloat(self.RoundEnd)
 	net.Send(ply)
 end
 
@@ -58,6 +64,8 @@ end)
 
 function GM:Tick()
 	local allplayers = player.GetAll()
+
+	print(string.ToMinutesSeconds(math.max(GAMEMODE.RoundEnd - CurTime(),0)))
 	
 	if allplayers then
 		for i, pl in ipairs(allplayers) do
@@ -69,20 +77,24 @@ function GM:Tick()
 		end
 
 		if CurTime() >= self.RoundEnd and (not self.RoundOver) then
-			table.sort( allplayers, function(a, b) return a:Frags() > b:Frags() end )
-			self.RoundOver = true
-			self.Winner = allplayers[1]
-			timer.Simple(5, function() GAMEMODE:RestartGame() end)
+			if self.WaitingForPlayers then
+				self:RestartGame()
+				self.WaitingForPlayers = false
+			else
+				table.sort( allplayers, function(a, b) return a:Frags() > b:Frags() end )
+				self.RoundOver = true
+				self.Winner = allplayers[1]
+				timer.Simple(5, function() GAMEMODE:RestartGame() end)
+			end
 		end
 	end
-
 	
 end
 
 function GM:RestartGame()
 	self.RoundOver = false
 	self.Winner = nil
-	self.RoundEnd = CurTime() + self.RoundTime
+	self.RoundEnd = CurTime() + self.RoundTime + self.PreRoundTime
 
 	if SERVER then
 		local allplayers = player.GetAll()
@@ -96,6 +108,32 @@ function GM:RestartGame()
 			end
 		end
 	end
+
+	self:PreRoundStart()
+end
+
+function GM:PreRoundStart()
+	local allplayers = player.GetAll()
+	
+	if allplayers then
+		for i, pl in ipairs(allplayers) do
+			if SERVER then
+				pl:Lock()
+			end
+		end
+	end
+	
+	self.PreRoundTimer = CurTime() + self.PreRoundTime
+
+	timer.Simple(self.PreRoundTime, function()
+		if allplayers then
+			for i, pl in ipairs(allplayers) do
+				if SERVER then
+					pl:UnLock()
+				end
+			end
+		end
+	end)
 end
 
 // Ammo Types

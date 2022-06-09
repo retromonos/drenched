@@ -59,3 +59,12 @@ surface.CreateFont("Drenched36", {
 	additive = false,
 	outline = false,
 })
+
+net.Receive("drenched_synchronizetime", function()
+	local servertime = net.ReadFloat()
+
+	GAMEMODE.RoundEnd = servertime
+end)
+
+--killicon.Add("proj_basewater", "killicons/proj_basewater", Color(255,255,255))
+--killicon.Add("drenched_wp_noodle", "killicons/drenched_wp_noodle", Color(255,255,255))

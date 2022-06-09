@@ -14,6 +14,10 @@ AddCSLuaFile("vgui/loadout_hud.lua")
 util.AddNetworkString("drenched_sendloadout")
 util.AddNetworkString("drenched_hurtflash")
 util.AddNetworkString("drenched_hitmarker")
+util.AddNetworkString("drenched_synchronizetime")
+
+resource.AddFile( "materials/killicons/proj_basewater.vmt" )
+resource.AddFile( "materials/killicons/drenched_wp_noodle.vmt" )
 
 function GM:PlayerSetHandsModel( ply, ent )
 

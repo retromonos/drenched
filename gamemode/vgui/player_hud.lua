@@ -54,6 +54,7 @@ end)
 
 hook.Add( "HUDPaint", "PlayerHUD", function()
     local pl = LocalPlayer()
+    local wep = pl:GetActiveWeapon()
     local healthfrac = pl:Health() / pl:GetMaxHealth()
 
     // ***************
@@ -75,7 +76,7 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
         draw.NoTexture()
     end
 
-    if pl.HitmarkTime and pl.HitmarkTime >= CurTime() then
+    if pl.HitmarkTime and pl.HitmarkTime >= CurTime() and (wep:IsValid() and pl:Alive()) then
         local color = Color(0, 183, 255,150*((pl.HitmarkTime-CurTime())/(LocalPlayer():GetActiveWeapon().Primary.Delay*1.5)))
         if pl.HitmarkKill then
             color = Color(255, 51, 0,150*((pl.HitmarkTime-CurTime())/(LocalPlayer():GetActiveWeapon().Primary.Delay*1.5)))   
@@ -101,8 +102,6 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
     surface.DrawRect(left_margin+2, (bottom_margin+2)+((hptall-4)*math.abs(1-healthfrac)), hpwide-4, (hptall-4)*healthfrac)
 
     draw.SimpleText(pl:Health(), "Drenched36", left_margin+(hpwide/2), bottom_margin+(hptall/2), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-
-    local wep = pl:GetActiveWeapon()
 
     if wep:IsValid() and pl:Alive() then
         surface.SetDrawColor(255,255,255)
@@ -160,6 +159,22 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
                 DrawLine(math.Round(pos.x + p.y), math.Round(pos.y + p.z), ang.roll)
             end
         end
+    end
+
+    // *************
+    // PRE-ROUND HUD
+    // *************
+
+    if GAMEMODE.PreRoundTimer and GAMEMODE.PreRoundTimer >= (CurTime()-1) then
+        if GAMEMODE.PreRoundTimer >= CurTime() then
+            draw.SimpleText(math.ceil(GAMEMODE.PreRoundTimer - CurTime()), "Drenched36", ScrW()/2, ScrH()/3, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        else
+            draw.SimpleText("Go!", "Drenched36", ScrW()/2, ScrH()/3, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        end
+    end
+
+    if GAMEMODE.WaitingForPlayers then
+        draw.SimpleText("Waiting for players: "..string.ToMinutesSeconds(math.max(GAMEMODE.RoundEnd - CurTime(),0)), "Drenched36", ScrW()/2, ScrH()/3, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 
     // ****************
