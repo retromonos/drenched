@@ -5,7 +5,13 @@ GM.Website = "N/A"
 
 function GM:Initialize()
 	self.RoundEnd = CurTime() + self.RoundTime
+
+	self:RegisterWeapon("drenched_wp_soaker")
+	self:RegisterWeapon("drenched_wp_drizzle")
+	self:RegisterWeapon("drenched_wp_lightning")
+	self:RegisterWeapon("drenched_wp_hose")
 end
+
 
 function GM:PlayerInitialSpawn(ply)
 	ply.Loadout = {
@@ -22,16 +28,21 @@ function GM:PlayerSpawn( ply )
     ply:SetWalkSpeed(250)
     ply:SetRunSpeed(250)
 	ply:RemoveAllAmmo()
+	ply:StripWeapons()
 	ply:GiveAmmo(self.TankSize, "water", true)
 
+	self:DoLoadout(ply)
+
+    ply:SetModel("models/player/alyx.mdl")
+	ply:SetupHands() 
+end
+
+function GM:DoLoadout(ply)
 	for _, wep in pairs(ply.Loadout) do
 		ply:Give(wep)
 	end
 	
 	ply:Give("drenched_wp_noodle")
-
-    ply:SetModel("models/player/alyx.mdl")
-	ply:SetupHands() 
 end
 
 hook.Add("EntityTakeDamage", "DamageEffects", function(ent, dmginfo)
