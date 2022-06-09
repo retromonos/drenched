@@ -4,17 +4,17 @@ GM.Loadout = {}
 function GM:RegisterWeapon(name)
     local sweptab = weapons.Get(name)
 
-    if SERVER then
-        table.insert(self.Items,sweptab)
-        table.insert(self.ItemIDs,name)
-    end
-
-    if CLIENT then
-        table.insert(self.Items,sweptab)
-        table.insert(self.ItemIDs,name)
-    end
+    table.insert(self.Items,sweptab)
+    table.insert(self.ItemIDs,name)
 
 end
+
+hook.Add("Initialize", "AddWeapons", function()
+    GAMEMODE:RegisterWeapon("drenched_wp_soaker")
+	GAMEMODE:RegisterWeapon("drenched_wp_drizzle")
+	GAMEMODE:RegisterWeapon("drenched_wp_lightning")
+	GAMEMODE:RegisterWeapon("drenched_wp_hose")
+end)
 
 local meta = FindMetaTable("Player")
 

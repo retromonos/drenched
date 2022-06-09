@@ -28,6 +28,8 @@ SWEP.Velocity = 1000
 SWEP.Gravity = true
 
 SWEP.DoHurtFlash = true
+SWEP.PressureDamageTaper = 1
+SWEP.PressureEffectsDamage = false
 
 SWEP.PumpAmount = 0.05
 SWEP.PumpDelay = 0.15
@@ -84,7 +86,11 @@ function SWEP:ShootBullets(damage, numshots, cone)
                 ent:SetPos(shootpos)
                 ent:SetAngles(owner:EyeAngles())
                 ent:SetOwner(owner)
-                ent.ProjDamage = self.Primary.Damage
+                if self.PressureEffectsDamage then
+                    ent.ProjDamage = self.Primary.Damage * math.min(self:GetPressure() * (1/self.PressureDamageTaper),1)
+                else
+                    ent.ProjDamage = self.Primary.Damage
+                end
                 ent.ProjSource = self
                 ent.Gravity = self.Gravity
                 ent.Team = owner:Team()

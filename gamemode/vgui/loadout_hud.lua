@@ -75,8 +75,10 @@ function GM:OpenLoadout()
 
             if table.KeyFromValue(LocalPlayer().Loadout, GAMEMODE.ItemIDs[i]) then
                 table.RemoveByValue(LocalPlayer().Loadout, GAMEMODE.ItemIDs[i])
+                surface.PlaySound("buttons/button9.wav")
             elseif #LocalPlayer().Loadout < 2 then
                 LocalPlayer():AddLoadout(GAMEMODE.ItemIDs[i])
+                surface.PlaySound("buttons/button9.wav")
             else
                 surface.PlaySound("buttons/button10.wav")
             end 

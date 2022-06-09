@@ -5,13 +5,7 @@ GM.Website = "N/A"
 
 function GM:Initialize()
 	self.RoundEnd = CurTime() + self.RoundTime
-
-	self:RegisterWeapon("drenched_wp_soaker")
-	self:RegisterWeapon("drenched_wp_drizzle")
-	self:RegisterWeapon("drenched_wp_lightning")
-	self:RegisterWeapon("drenched_wp_hose")
 end
-
 
 function GM:PlayerInitialSpawn(ply)
 	ply.Loadout = {
