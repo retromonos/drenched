@@ -5,6 +5,8 @@ function GM:OpenHelp()
 
     if frame then return end
 
+    local screenscale = Screenscale()
+
     local w,h = 600*screenscale, 550*screenscale
 
     local frame = vgui.Create("DFrame")

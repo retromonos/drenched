@@ -6,6 +6,8 @@ local hide = {
     ["CHudDamageIndicator"] = true
 }
 
+local screenscale = Screenscale()
+
 local flashmat = Material("models/shadertest/shader3")
 
 hook.Add( "HUDShouldDraw", "HideHUD", function( name )
@@ -75,6 +77,7 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
     // ***************
     // HP & WEAPON HUD
     // ***************
+    
     local left_margin = 50*screenscale
     local bottom_margin = ScrH() - (160*screenscale)
 

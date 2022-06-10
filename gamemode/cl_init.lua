@@ -8,6 +8,8 @@ include("vgui/scoreboard.lua")
 
 local basefont = "Trebuchet MS"
 
+local screenscale = Screenscale()
+
 surface.CreateFont("Drenched18", {
     font = basefont,
 	extended = false,
