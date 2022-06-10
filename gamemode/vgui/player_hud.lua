@@ -89,7 +89,7 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
     if pl.KillNoticeTime and pl.KillNoticeTime >= CurTime() then
         local killcol = Color(255,255,255,255*((pl.KillNoticeTime-CurTime())/0.75))
 
-        draw.SimpleText("Drenched", "Drenched24", (ScrW()/2),(ScrH()/2)+128, killcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Drenched", "Drenched21", (ScrW()/2),(ScrH()/2)+128, killcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         draw.SimpleText(pl.KillNoticeName, "Drenched36", (ScrW()/2),(ScrH()/2)+160, killcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
     
