@@ -1,6 +1,6 @@
 SWEP.Base = "drenched_wp_base"
 
-SWEP.PrintName = "Drizzle LW-270"		
+SWEP.PrintName = "Deluge WR-600"		
 
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
@@ -8,7 +8,7 @@ SWEP.ViewModel = "models/weapons/cstrike/c_pist_fiveseven.mdl"
 SWEP.WorldModel = "models/weapons/w_pist_fiveseven.mdl"
 SWEP.HoldType = "pistol"
 
-SWEP.Slot = 1
+SWEP.Slot = 2
 SWEP.SlotPos = 0
 
 if CLIENT then
@@ -23,13 +23,13 @@ if CLIENT then
 	}
 end
 
-SWEP.Primary.Delay = 0.225
-SWEP.Primary.Damage = 18
-SWEP.Cone = 1.25 // in degrees of deviation
-SWEP.AmmoUsage = 6
+SWEP.Primary.Delay = 0.1
+SWEP.Primary.Damage = 15
+SWEP.Cone = 1.75 // in degrees of deviation
+SWEP.AmmoUsage = 12
 SWEP.FireSound = "weapons/ar2/fire1.wav"
 
-SWEP.Velocity = 1700
-SWEP.PressureDrain = 0.07
+SWEP.Velocity = 2800
+SWEP.PressureDrain = 0.02
 
-SWEP.Zoom = 1.3
+SWEP.Zoom = 1.2

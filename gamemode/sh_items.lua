@@ -14,6 +14,8 @@ hook.Add("Initialize", "AddWeapons", function()
 	GAMEMODE:RegisterWeapon("drenched_wp_drizzle")
 	GAMEMODE:RegisterWeapon("drenched_wp_lightning")
 	GAMEMODE:RegisterWeapon("drenched_wp_hose")
+    GAMEMODE:RegisterWeapon("drenched_wp_cloudburst")
+    GAMEMODE:RegisterWeapon("drenched_wp_deluge")
 end)
 
 local meta = FindMetaTable("Player")

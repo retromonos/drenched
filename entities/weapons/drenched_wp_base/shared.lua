@@ -31,6 +31,8 @@ SWEP.DoHurtFlash = true
 SWEP.PressureDamageTaper = 1
 SWEP.PressureEffectsDamage = false
 
+SWEP.TrailColor = Color(163,253,253,100)
+
 SWEP.PumpAmount = 0.05
 SWEP.PumpDelay = 0.15
 SWEP.PressureDrain = 0.025
@@ -94,7 +96,7 @@ function SWEP:ShootBullets(damage, numshots, cone)
                 ent.ProjSource = self
                 ent.Gravity = self.Gravity
                 ent.Team = owner:Team()
-                local trail = util.SpriteTrail(ent, 0, Color(163,253,253,100), true, 8, 5, 1, 0, "trails/smoke.vmt")
+                local trail = util.SpriteTrail(ent, 0, self.TrailColor, true, 8, 5, 1, 0, "trails/smoke.vmt")
 
                 ent:Spawn()
 
@@ -194,7 +196,7 @@ function SWEP:Think()
 
             local particle = emitter:Add( "particle/smokesprites_0001", pos )
                 particle:SetColor( 220,220,220 )
-                particle:SetDieTime( 1 )
+                particle:SetDieTime( 1.5 )
                 particle:SetStartAlpha( 100 )
                 particle:SetEndAlpha( 50 )
                 particle:SetStartSize( 16 )
@@ -232,7 +234,7 @@ end
 
 function SWEP:DoRefill(owner)
     if self:GetNextRefill() <= CurTime() then
-        owner:SetAmmo(math.min(owner:GetAmmoCount("water") + owner:WaterLevel(), GAMEMODE.TankSize), "water")
+        owner:SetAmmo(math.min(owner:GetAmmoCount("water") + owner:WaterLevel() + 1, GAMEMODE.TankSize), "water")
         self:SetNextRefill(CurTime() + (1/self.RefillRate))
     end
 end

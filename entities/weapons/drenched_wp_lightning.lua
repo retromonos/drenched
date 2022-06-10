@@ -24,7 +24,7 @@ if CLIENT then
 end
 
 SWEP.Primary.Delay = 0.75
-SWEP.Primary.Damage = 60
+SWEP.Primary.Damage = 65
 SWEP.Cone = 0.5 // in degrees of deviation
 SWEP.AmmoUsage = 5
 SWEP.FireSound = "weapons/ar2/fire1.wav"

@@ -9,12 +9,14 @@ include("sh_items.lua")
 AddCSLuaFile("sh_items.lua")
 
 AddCSLuaFile("vgui/player_hud.lua")
+AddCSLuaFile("vgui/help_hud.lua")
 AddCSLuaFile("vgui/loadout_hud.lua")
 
 util.AddNetworkString("drenched_sendloadout")
 util.AddNetworkString("drenched_hurtflash")
 util.AddNetworkString("drenched_hitmarker")
 util.AddNetworkString("drenched_synchronizetime")
+util.AddNetworkString("drenched_synchronizepretime")
 
 resource.AddFile( "materials/killicons/proj_basewater.vmt" )
 resource.AddFile( "materials/killicons/drenched_wp_noodle.vmt" )
@@ -29,6 +31,10 @@ function GM:PlayerSetHandsModel( ply, ent )
 		ent:SetBodyGroups( info.body )
 	end
 
+end
+
+function GM:ShowHelp(pl)
+	pl:SendLua("GAMEMODE:OpenHelp()")
 end
 
 function GM:ShowTeam(pl)

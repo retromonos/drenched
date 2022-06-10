@@ -1,6 +1,6 @@
 SWEP.Base = "drenched_wp_base"
 
-SWEP.PrintName = "Drizzle LW-270"		
+SWEP.PrintName = "Cloudburst ST-120"		
 
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
@@ -23,13 +23,16 @@ if CLIENT then
 	}
 end
 
-SWEP.Primary.Delay = 0.225
-SWEP.Primary.Damage = 18
-SWEP.Cone = 1.25 // in degrees of deviation
-SWEP.AmmoUsage = 6
+SWEP.Primary.Delay = 0.3
+SWEP.Primary.Damage = 35
+SWEP.Cone = 1 // in degrees of deviation
+SWEP.AmmoUsage = 25
 SWEP.FireSound = "weapons/ar2/fire1.wav"
 
-SWEP.Velocity = 1700
-SWEP.PressureDrain = 0.07
+SWEP.PressureEffectsDamage = true
+SWEP.PressureDamageTaper = 0.8
 
-SWEP.Zoom = 1.3
+SWEP.Velocity = 2500
+SWEP.PressureDrain = 0.15
+
+SWEP.Zoom = 1.5

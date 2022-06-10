@@ -5,7 +5,7 @@ function GM:OpenLoadout()
 
     if frame then return end
 
-    local w,h = 300, 400
+    local w,h = 400, 400
 
     local frame = vgui.Create("DFrame")
     frame:SetSize(w,h)
@@ -56,7 +56,7 @@ function GM:OpenLoadout()
         end
 
         local wepcheck = vgui.Create("DButton", weppanel)
-        wepcheck:SetPos(weppanel:GetWide()-32,10)
+        wepcheck:SetPos(weppanel:GetWide()-64,10)
         wepcheck:SetText("")
         wepcheck:SetSize(24,24)
         

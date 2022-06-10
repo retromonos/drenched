@@ -89,7 +89,7 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
     if pl.KillNoticeTime and pl.KillNoticeTime >= CurTime() then
         local killcol = Color(255,255,255,255*((pl.KillNoticeTime-CurTime())/0.75))
 
-        draw.SimpleText("Killed", "Drenched24", (ScrW()/2),(ScrH()/2)+128, killcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Drenched", "Drenched24", (ScrW()/2),(ScrH()/2)+128, killcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         draw.SimpleText(pl.KillNoticeName, "Drenched36", (ScrW()/2),(ScrH()/2)+160, killcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
     
@@ -128,7 +128,7 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
             end
         end
 
-        draw.SimpleText(pl:GetAmmoCount("water") .. " mL", "Drenched24", left_margin+hpwide+4, bottom_margin+(hptall/2) - 4, ((pl:GetAmmoCount("water") >= math.min(wep.AmmoUsage,2)) and Color(255,255,255)) or Color(200,200,200), TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)   
+        draw.SimpleText(pl:GetAmmoCount("water") .. " mL", "Drenched24", left_margin+hpwide+4, bottom_margin+(hptall/2) - 4, ((pl:GetAmmoCount("water") >= wep.AmmoUsage) and Color(255,255,255)) or Color(200,200,200), TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)   
         
         if not wep.NoPressure then
             draw.SimpleText(math.Round(wep:GetPressure()*(wep.Velocity/16),1) .. " psi", "Drenched24", left_margin+hpwide+4, bottom_margin+(hptall/2) + 4, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)

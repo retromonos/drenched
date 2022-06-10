@@ -25,8 +25,8 @@ function GM:PlayerInitialSpawn(ply)
 end
 
 function GM:PlayerSpawn( ply )
-    ply:SetWalkSpeed(250)
-    ply:SetRunSpeed(250)
+    ply:SetWalkSpeed(280)
+    ply:SetRunSpeed(280)
 	ply:RemoveAllAmmo()
 	ply:StripWeapons()
 	ply:GiveAmmo(self.TankSize, "water", true)
@@ -94,13 +94,18 @@ end
 function GM:RestartGame()
 	self.RoundOver = false
 	self.Winner = nil
-	self.RoundEnd = CurTime() + self.RoundTime + self.PreRoundTime
 
 	if SERVER then
+		self.RoundEnd = CurTime() + self.RoundTime + self.PreRoundTime
+
 		local allplayers = player.GetAll()
 		if allplayers then
 			for i = 1, #allplayers do
 				local pl = allplayers[i]
+
+				net.Start("drenched_synchronizetime")
+					net.WriteFloat(self.RoundEnd)
+				net.Send(pl)
 
 				pl:Spawn()
 				pl:SetFrags(0)
@@ -115,21 +120,34 @@ end
 function GM:PreRoundStart()
 	local allplayers = player.GetAll()
 	
-	if allplayers then
-		for i, pl in ipairs(allplayers) do
-			if SERVER then
+	if SERVER then
+
+		self.PreRoundTimer = CurTime() + self.PreRoundTime
+		if allplayers then
+
+			for i, pl in ipairs(allplayers) do
 				pl:Lock()
+	
+				net.Start("drenched_synchronizetime")
+					net.WriteFloat(self.RoundEnd)
+				net.Send(pl)
+
+				net.Start("drenched_synchronizepretime")
+					net.WriteFloat(self.PreRoundTimer)
+				net.Send(pl)
 			end
 		end
 	end
-	
-	self.PreRoundTimer = CurTime() + self.PreRoundTime
 
 	timer.Simple(self.PreRoundTime, function()
 		if allplayers then
 			for i, pl in ipairs(allplayers) do
 				if SERVER then
 					pl:UnLock()
+
+					net.Start("drenched_synchronizetime")
+						net.WriteFloat(self.RoundEnd)
+					net.Send(pl)
 				end
 			end
 		end
