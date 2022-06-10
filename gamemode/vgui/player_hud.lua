@@ -196,7 +196,7 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
     draw.RoundedBoxEx(32,(ScrW()/2)-58, 40, 116, 60, Color(0, 183, 255,100), false, false, true, true)
     draw.SimpleText("You: "..pl:Frags(), "Drenched36", (ScrW()/2)-284, 20, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
-     local players = player.GetAll()
+    local players = player.GetAll()
     table.sort( players, function(a, b) return a:Frags() > b:Frags() end )
 
     local opposingplayer

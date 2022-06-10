@@ -11,6 +11,7 @@ AddCSLuaFile("sh_items.lua")
 AddCSLuaFile("vgui/player_hud.lua")
 AddCSLuaFile("vgui/help_hud.lua")
 AddCSLuaFile("vgui/loadout_hud.lua")
+AddCSLuaFile("vgui/scoreboard.lua")
 
 util.AddNetworkString("drenched_sendloadout")
 util.AddNetworkString("drenched_hurtflash")

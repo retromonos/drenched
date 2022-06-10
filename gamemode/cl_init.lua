@@ -4,6 +4,7 @@ include("sh_items.lua")
 include("vgui/player_hud.lua")
 include("vgui/help_hud.lua")
 include("vgui/loadout_hud.lua")
+include("vgui/scoreboard.lua")
 
 local basefont = "Trebuchet MS"
 
