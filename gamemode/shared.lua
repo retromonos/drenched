@@ -64,8 +64,6 @@ end)
 
 function GM:Tick()
 	local allplayers = player.GetAll()
-
-	print(string.ToMinutesSeconds(math.max(GAMEMODE.RoundEnd - CurTime(),0)))
 	
 	if allplayers then
 		for i, pl in ipairs(allplayers) do

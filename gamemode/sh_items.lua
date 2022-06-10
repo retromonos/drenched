@@ -22,8 +22,15 @@ local meta = FindMetaTable("Player")
 
 net.Receive("drenched_sendloadout", function()
     local loadout = net.ReadTable()
+    local pl = net.ReadEntity()
     
-    meta.Loadout = loadout
+    if CLIENT then
+        meta.Loadout = loadout
+    end
+    
+    if SERVER and pl then
+        pl.Loadout = loadout
+    end
 end)
 
 function meta:AddLoadout(wep)
@@ -31,6 +38,7 @@ function meta:AddLoadout(wep)
 
     net.Start("drenched_sendloadout")
         net.WriteTable(self.Loadout)
+        net.WriteEntity(self)
     net.SendToServer()
 end
 

@@ -49,6 +49,8 @@ SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo			= "none"
 
+SWEP.ProjectileOffset = Vector(10,-6,10)
+
 SWEP.PrintName			= "Base Weapon"			
 SWEP.Slot				= 0
 SWEP.SlotPos			= 1
@@ -83,7 +85,7 @@ function SWEP:ShootBullets(damage, numshots, cone)
             local ent = ents.Create(self.Projectile)
             if ent:IsValid() then
 
-                local shootpos = owner:GetShootPos() + (owner:GetRight()*10) + (owner:GetUp()*-6) +  (owner:GetForward()*10)
+                local shootpos = owner:GetShootPos() + (owner:GetRight()*self.ProjectileOffset.x) + (owner:GetUp()*self.ProjectileOffset.y) +  (owner:GetForward()*self.ProjectileOffset.z)
 
                 ent:SetPos(shootpos)
                 ent:SetAngles(owner:EyeAngles())

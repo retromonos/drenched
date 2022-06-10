@@ -13,7 +13,7 @@ SWEP.SlotPos = 0
 
 if CLIENT then
 	SWEP.ShowViewModel = false
-	SWEP.ShowWorldModel = true
+	SWEP.ShowWorldModel = false
 	SWEP.ViewModelFOV = 60
 	SWEP.ViewModelFlip = false
 
@@ -21,6 +21,12 @@ if CLIENT then
 		["tank"] = { type = "Model", model = "models/props_wasteland/horizontalcoolingtank04.mdl", bone = "v_weapon.FIVESEVEN_PARENT", rel = "", pos = Vector(-0.233, -3.159, -1.847), angle = Angle(90, 0, -90), size = Vector(0.017, 0.017, 0.017), color = Color(0, 229, 255, 255), surpresslightning = false, material = "phoenix_storms/gear", skin = 0, bodygroup = {} },
 		["usp"] = { type = "Model", model = "models/weapons/w_pist_usp.mdl", bone = "v_weapon.FIVESEVEN_PARENT", rel = "", pos = Vector(-0.039, 2.421, -2.04), angle = Angle(-90, 0, -90), size = Vector(0.856, 0.856, 0.856), color = Color(255, 191, 0, 255), surpresslightning = false, material = "phoenix_storms/gear", skin = 0, bodygroup = {} }
 	}
+
+	SWEP.WElements = {
+		["tank"] = { type = "Model", model = "models/props_wasteland/horizontalcoolingtank04.mdl", bone = "ValveBiped.Anim_Attachment_RH", rel = "", pos = Vector(-0.655, -4.301, 1.331), angle = Angle(90, 0, -90), size = Vector(0.017, 0.017, 0.017), color = Color(0, 229, 255, 255), surpresslightning = false, material = "phoenix_storms/gear", skin = 0, bodygroup = {} },
+		["usp"] = { type = "Model", model = "models/weapons/w_pist_usp.mdl", bone = "ValveBiped.Anim_Attachment_RH", rel = "", pos = Vector(-0.884, 1.434, 1.122), angle = Angle(90, 0, -90), size = Vector(0.856, 0.856, 0.856), color = Color(255, 191, 0, 255), surpresslightning = false, material = "phoenix_storms/gear", skin = 0, bodygroup = {} }
+	}
+		
 end
 
 SWEP.Primary.Delay = 0.225
@@ -31,5 +37,6 @@ SWEP.FireSound = "weapons/ar2/fire1.wav"
 
 SWEP.Velocity = 1700
 SWEP.PressureDrain = 0.07
+SWEP.PumpAmount = 0.1
 
 SWEP.Zoom = 1.3
