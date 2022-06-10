@@ -33,7 +33,7 @@ function GM:PlayerSpawn( ply )
 
 	self:DoLoadout(ply)
 
-    ply:SetModel("models/player/alyx.mdl")
+    ply:SetModel(player_manager.TranslatePlayerModel(ply:GetInfo("cl_playermodel")))
 	ply:SetupHands() 
 end
 
