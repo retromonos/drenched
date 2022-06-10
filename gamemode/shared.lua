@@ -47,18 +47,43 @@ end
 
 hook.Add("EntityTakeDamage", "DamageEffects", function(ent, dmginfo)
 	if ent:IsPlayer() then
+		net.Start("drenched_wipedeathscreen")
+		net.Send(ent)
+
 		if dmginfo:GetAttacker():IsPlayer() then
+			local killed = dmginfo:GetDamage() >= ent:Health()
+
 			net.Start("drenched_hitmarker")
 				net.WriteInt(dmginfo:GetDamage(), 9)
-				net.WriteBool(dmginfo:GetDamage() >= ent:Health())
+				net.WriteBool(killed)
 				net.WriteString(ent:Name())
 			net.Send(dmginfo:GetAttacker())
+
+			if killed then
+				net.Start("drenched_deathscreen")
+					net.WriteEntity(dmginfo:GetAttacker())
+					net.WriteString(dmginfo:GetAttacker():GetActiveWeapon().PrintName)
+				net.Send(ent)
+			end
 
 			if dmginfo:GetAttacker():GetActiveWeapon().DoHurtFlash then
 				net.Start("drenched_hurtflash")
 				net.Send(ent)
 			end
 		end
+	end
+end)
+
+hook.Add("PlayerDeath", "DeathScreen", function(ent, inflictor, attacker)
+
+	net.Start("drenched_wipedeathscreen")
+	net.Send(ent)
+
+	if attacker:IsPlayer() and (attacker ~= ent) then
+		net.Start("drenched_deathscreen")
+			net.WriteEntity(attacker)
+			net.WriteString(attacker:GetActiveWeapon().PrintName)
+		net.Send(ent)
 	end
 end)
 

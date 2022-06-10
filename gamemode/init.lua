@@ -15,6 +15,8 @@ AddCSLuaFile("vgui/scoreboard.lua")
 
 util.AddNetworkString("drenched_sendloadout")
 util.AddNetworkString("drenched_hurtflash")
+util.AddNetworkString("drenched_deathscreen")
+util.AddNetworkString("drenched_wipedeathscreen")
 util.AddNetworkString("drenched_hitmarker")
 util.AddNetworkString("drenched_synchronizetime")
 util.AddNetworkString("drenched_synchronizepretime")

@@ -5,7 +5,7 @@ function GM:OpenHelp()
 
     if frame then return end
 
-    local w,h = 600, 550
+    local w,h = 600*screenscale, 550*screenscale
 
     local frame = vgui.Create("DFrame")
     frame:SetSize(w,h)
@@ -16,8 +16,8 @@ function GM:OpenHelp()
     frame:MakePopup()
     function frame:Paint(w, h)
         draw.RoundedBoxEx(32, 0, 0, w, h, Color(0, 183, 255,100), true, true, true, true)
-        draw.SimpleText("Drenched", "Drenched36", w*(1/2), 32, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Created by Liverneck", "Drenched18", w*(1/2), h-24, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Drenched", "Drenched36", w*(1/2), 32*screenscale, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Created by Liverneck", "Drenched18", w*(1/2), h-(24*screenscale), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 
     function frame:Think()

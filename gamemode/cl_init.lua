@@ -11,7 +11,7 @@ local basefont = "Trebuchet MS"
 surface.CreateFont("Drenched18", {
     font = basefont,
 	extended = false,
-	size = 18,
+	size = 18*screenscale,
 	weight = 500,
 	blursize = 0,
 	scanlines = 0,
@@ -29,7 +29,7 @@ surface.CreateFont("Drenched18", {
 surface.CreateFont("Drenched21", {
     font = basefont,
 	extended = false,
-	size = 21,
+	size = 21*screenscale,
 	weight = 500,
 	blursize = 0,
 	scanlines = 0,
@@ -47,7 +47,7 @@ surface.CreateFont("Drenched21", {
 surface.CreateFont("Drenched24", {
     font = basefont,
 	extended = false,
-	size = 24,
+	size = 24*screenscale,
 	weight = 500,
 	blursize = 0,
 	scanlines = 0,
@@ -65,7 +65,7 @@ surface.CreateFont("Drenched24", {
 surface.CreateFont("Drenched36", {
     font = basefont,
 	extended = false,
-	size = 36,
+	size = 36*screenscale,
 	weight = 500,
 	blursize = 0,
 	scanlines = 0,
