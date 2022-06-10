@@ -3,8 +3,9 @@ local scframe
 function GM:ScoreboardShow()
     if scframe and scframe:IsVisible() then return end
 	
+    local screenscale = Screenscale()
 
-    local w,h = 600, 550
+    local w,h = 600*screenscale, 550*screenscale
 
     if not scframe then
 		scframe = vgui.Create("DFrame")
@@ -24,7 +25,7 @@ function GM:ScoreboardShow()
         draw.SimpleText("Drenched", "Drenched18", w*(1/8), h-24, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText(game.GetMap(), "Drenched18", w*(7/8), h-24, Color(255,255,255), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         surface.SetDrawColor(Color(255,255,255))
-        surface.DrawRect(w*(1/8),64,w*(3/4),2)
+        surface.DrawRect(w*(1/8),(64*screenscale),w*(3/4),2)
     end
 
     local scorecardpanel = vgui.Create("DScrollPanel", scframe)
@@ -63,7 +64,7 @@ function GM:ScoreboardShow()
     function scorecardpanel:CreateScorecard(pl)
 
         local scorecard = vgui.Create("DPanel", self)
-        scorecard:SetSize(self:GetWide(),40)
+        scorecard:SetSize(self:GetWide(),(40*screenscale))
         scorecard:Dock(TOP)
         scorecard:SetText("")
         scorecard.Player = pl
@@ -75,7 +76,7 @@ function GM:ScoreboardShow()
         end
 
         local scorecard_avatar = vgui.Create( "AvatarImage", scorecard )
-        scorecard_avatar:SetSize( 32, 32 )
+        scorecard_avatar:SetSize( 32*screenscale, 32*screenscale )
         scorecard_avatar:SetPos( 4, 4 )
         scorecard_avatar:SetPlayer( pl, 32 )
         

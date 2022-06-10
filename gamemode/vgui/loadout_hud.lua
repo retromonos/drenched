@@ -44,14 +44,14 @@ function GM:OpenLoadout()
             draw.SimpleText(wep.PrintName, "Drenched24", 0, 4, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
 
             surface.SetDrawColor(255,255,255)
-            surface.DrawRect(0,30,160,2)
+            surface.DrawRect(0,30,160*screenscale,2)
 
             local dmgappend = ""
             if wep.Primary.NumShots > 1 then
                 dmgappend = " x "..wep.Primary.NumShots
             end
             draw.SimpleText(wep.Primary.Damage .. dmgappend .. " Damage", "Drenched18", 0, 32*screenscale, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
-            draw.SimpleText("-"..math.Round((1/wep.Primary.Delay)*wep.AmmoUsage,1) .. " mL/s", "Drenched18", 100, 50, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+            draw.SimpleText("-"..math.Round((1/wep.Primary.Delay)*wep.AmmoUsage,1) .. " mL/s", "Drenched18", 100*screenscale, 50*screenscale, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
 
             draw.SimpleText(math.Round(wep.Velocity/16,1) .. " psi", "Drenched18", 100*screenscale, 32*screenscale, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
             draw.SimpleText(wep.Primary.Delay .. "s Delay", "Drenched18", 0, 50*screenscale, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)

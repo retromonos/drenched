@@ -118,7 +118,7 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
 
         if wep:IsValid() then
             surface.SetDrawColor(255,255,255)
-            surface.DrawRect(left_margin+hpwide, bottom_margin+(hptall/2), 128, 2)
+            surface.DrawRect(left_margin+hpwide, bottom_margin+(hptall/2), 128*screenscale, 2)
             
             if pl:GetAmmoCount("water") < GAMEMODE.TankSize then
                 draw.SimpleText(GAMEMODE.TankSize .. " mL", "Drenched18", left_margin+hpwide+4, bottom_margin+(hptall/2) - (28*screenscale), Color(200,200,200), TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
@@ -234,8 +234,8 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
         opposingplayer = players[1]
     end
 
-    draw.SimpleText(opposingplayer:Name()..": "..opposingplayer:Frags(), "Drenched36", (ScrW()/2)+284, 20, Color(255,255,255), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-    draw.SimpleText(string.ToMinutesSeconds(math.max(GAMEMODE.RoundEnd - CurTime(),0)), "Drenched36", (ScrW()/2), 60, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText(opposingplayer:Name()..": "..opposingplayer:Frags(), "Drenched36", (ScrW()/2)+(284*screenscale), 20*screenscale, Color(255,255,255), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+    draw.SimpleText(string.ToMinutesSeconds(math.max(GAMEMODE.RoundEnd - CurTime(),0)), "Drenched36", (ScrW()/2), 60*screenscale, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     draw.SimpleText("Playing to "..GAMEMODE.WinFrags, "Drenched18", (ScrW()/2), 85*screenscale, Color(200,200,200), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     
     surface.SetDrawColor(255,255,255)
