@@ -69,6 +69,10 @@ net.Receive("drenched_deathscreen", function()
 
 end)
 
+function GM:HUDDrawTargetID()
+
+end
+
 hook.Add( "HUDPaint", "PlayerHUD", function()
     local pl = LocalPlayer()
     local wep = pl:GetActiveWeapon()
@@ -182,6 +186,10 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
             killwep = pl.KillerWeapon
         end
 
+        surface.SetDrawColor(Color(0,0,0))
+        surface.DrawRect(0,0,ScrW(),ScrH()*(1/8))
+        surface.DrawRect(0,ScrH()-(ScrH()*(1/8)),ScrW(),ScrH()*(1/8))
+
         draw.RoundedBoxEx(32,(ScrW()/2)-(150*screenscale), (ScrH()/2)-(75*screenscale), 300*screenscale, 150*screenscale, Color(0, 183, 255,100), true, true, true, true)
         draw.SimpleText("Drenched by", "Drenched24", ScrW()/2, (ScrH()/2)-32, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         draw.SimpleText(killer, "Drenched36", ScrW()/2, (ScrH()/2), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -236,7 +244,7 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
 
     draw.SimpleText(opposingplayer:Name()..": "..opposingplayer:Frags(), "Drenched36", (ScrW()/2)+(284*screenscale), 20*screenscale, Color(255,255,255), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
     draw.SimpleText(string.ToMinutesSeconds(math.max(GAMEMODE.RoundEnd - CurTime(),0)), "Drenched36", (ScrW()/2), 60*screenscale, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-    draw.SimpleText("Playing to "..GAMEMODE.WinFrags, "Drenched18", (ScrW()/2), 85*screenscale, Color(200,200,200), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Playing to "..GetConVar("drenched_scorelimit"):GetInt(), "Drenched18", (ScrW()/2), 85*screenscale, Color(200,200,200), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     
     surface.SetDrawColor(255,255,255)
     surface.DrawRect((ScrW()/2)-(58*screenscale), 40*screenscale, 116*screenscale, 2)

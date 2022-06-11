@@ -21,8 +21,9 @@ util.AddNetworkString("drenched_hitmarker")
 util.AddNetworkString("drenched_synchronizetime")
 util.AddNetworkString("drenched_synchronizepretime")
 
-resource.AddFile( "materials/killicons/proj_basewater.vmt" )
-resource.AddFile( "materials/killicons/drenched_wp_noodle.vmt" )
+CreateConVar("drenched_scorelimit", 15)
+CreateConVar("drenched_roundtime", 300)
+CreateConVar("drenched_roundlimit", 3)
 
 function GM:PlayerSetHandsModel( ply, ent )
 

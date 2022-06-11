@@ -6,12 +6,13 @@ SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
 SWEP.ViewModel = "models/weapons/cstrike/c_rif_galil.mdl"
 SWEP.WorldModel = "models/weapons/w_rif_galil.mdl"
-SWEP.HoldType = "ar2"
+
 
 SWEP.Slot = 2
 SWEP.SlotPos = 0
 
 if CLIENT then
+	SWEP.HoldType = "ar2"
 	SWEP.ShowViewModel = false
 	SWEP.ShowWorldModel = false
 	SWEP.ViewModelFOV = 50

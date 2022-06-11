@@ -50,11 +50,16 @@ function GM:OpenLoadout()
             if wep.Primary.NumShots > 1 then
                 dmgappend = " x "..wep.Primary.NumShots
             end
-            draw.SimpleText(wep.Primary.Damage .. dmgappend .. " Damage", "Drenched18", 0, 32*screenscale, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
-            draw.SimpleText("-"..math.Round((1/wep.Primary.Delay)*wep.AmmoUsage,1) .. " mL/s", "Drenched18", 100*screenscale, 50*screenscale, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
 
-            draw.SimpleText(math.Round(wep.Velocity/16,1) .. " psi", "Drenched18", 100*screenscale, 32*screenscale, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
-            draw.SimpleText(wep.Primary.Delay .. "s Delay", "Drenched18", 0, 50*screenscale, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+            if wep.NoPressure then
+                draw.SimpleText(wep.Description, "Drenched18", 0, 32*screenscale, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+            else
+                draw.SimpleText(wep.Primary.Damage .. dmgappend .. " Damage", "Drenched18", 0, 32*screenscale, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+                draw.SimpleText("-"..math.Round((1/wep.Primary.Delay)*wep.AmmoUsage,1) .. " mL/s", "Drenched18", 100*screenscale, 50*screenscale, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+
+                draw.SimpleText(math.Round(wep.Velocity/16,1) .. " psi", "Drenched18", 100*screenscale, 32*screenscale, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+                draw.SimpleText(wep.Primary.Delay .. "s Delay", "Drenched18", 0, 50*screenscale, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+            end
         end
 
         local wepcheck = vgui.Create("DButton", weppanel)

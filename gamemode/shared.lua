@@ -15,6 +15,9 @@ function GM:PlayerInitialSpawn(ply)
 		"drenched_wp_drizzle"
 	}
 
+	ply.LastDamaged = 0
+	ply.NextHeal = 0
+
 	net.Start("drenched_sendloadout")
 		net.WriteTable(ply.Loadout)
 	net.Send(ply)
@@ -25,6 +28,7 @@ function GM:PlayerInitialSpawn(ply)
 end
 
 function GM:PlayerSpawn( ply )
+	ply:UnSpectate()
     ply:SetWalkSpeed(280)
     ply:SetRunSpeed(280)
 	ply:RemoveAllAmmo()
@@ -49,6 +53,8 @@ hook.Add("EntityTakeDamage", "DamageEffects", function(ent, dmginfo)
 	if ent:IsPlayer() then
 		net.Start("drenched_wipedeathscreen")
 		net.Send(ent)
+
+		ent.LastDamaged = CurTime()
 
 		if dmginfo:GetAttacker():IsPlayer() then
 			local killed = dmginfo:GetDamage() >= ent:Health()
@@ -80,6 +86,9 @@ hook.Add("PlayerDeath", "DeathScreen", function(ent, inflictor, attacker)
 	net.Send(ent)
 
 	if attacker:IsPlayer() and (attacker ~= ent) then
+		ent:Spectate(OBS_MODE_FREEZECAM)
+		ent:SpectateEntity(attacker)
+
 		net.Start("drenched_deathscreen")
 			net.WriteEntity(attacker)
 			net.WriteString(attacker:GetActiveWeapon().PrintName)
@@ -92,10 +101,25 @@ function GM:Tick()
 	
 	if allplayers then
 		for i, pl in ipairs(allplayers) do
-		    if (pl:Frags() >= self.WinFrags) and (not self.RoundOver) then
+		    if (pl:Frags() >= GetConVar("drenched_scorelimit"):GetInt()) and (not self.RoundOver) then
 				self.RoundOver = true
 				self.Winner = pl
 				timer.Simple(5, function() GAMEMODE:RestartGame() end)
+			end
+
+			if SERVER then
+				local towel = pl:HasWeapon("drenched_wp_towel")
+				local healtime = 5
+				local healdelay = 0.15
+				if towel then
+					healtime = 3
+					healdelay = 0.075
+				end
+
+				if ((pl.LastDamaged + healtime) <= CurTime()) and (pl.NextHeal <= CurTime()) then
+					pl:SetHealth(math.min(pl:Health()+1,pl:GetMaxHealth()))
+					pl.NextHeal = CurTime() + healdelay
+				end
 			end
 		end
 
@@ -110,6 +134,7 @@ function GM:Tick()
 				timer.Simple(5, function() GAMEMODE:RestartGame() end)
 			end
 		end
+
 	end
 	
 end
@@ -119,7 +144,7 @@ function GM:RestartGame()
 	self.Winner = nil
 
 	if SERVER then
-		self.RoundEnd = CurTime() + self.RoundTime + self.PreRoundTime
+		self.RoundEnd = CurTime() + GetConVar("drenched_roundtime"):GetInt() + self.PreRoundTime
 
 		local allplayers = player.GetAll()
 		if allplayers then
@@ -128,6 +153,7 @@ function GM:RestartGame()
 
 				net.Start("drenched_synchronizetime")
 					net.WriteFloat(self.RoundEnd)
+					net.WriteEntity(self.Winner)
 				net.Send(pl)
 
 				pl:Spawn()
@@ -153,6 +179,7 @@ function GM:PreRoundStart()
 	
 				net.Start("drenched_synchronizetime")
 					net.WriteFloat(self.RoundEnd)
+					net.WriteEntity(self.Winner)
 				net.Send(pl)
 
 				net.Start("drenched_synchronizepretime")
@@ -170,6 +197,7 @@ function GM:PreRoundStart()
 
 					net.Start("drenched_synchronizetime")
 						net.WriteFloat(self.RoundEnd)
+						net.WriteEntity(self.Winner)
 					net.Send(pl)
 				end
 			end

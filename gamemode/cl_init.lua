@@ -84,8 +84,12 @@ surface.CreateFont("Drenched36", {
 
 net.Receive("drenched_synchronizetime", function()
 	local servertime = net.ReadFloat()
+	local winner = net.ReadEntity()
 
 	GAMEMODE.RoundEnd = servertime
+	if winner then
+		GAMEMODE.Winner = winner
+	end
 end)
 
 net.Receive("drenched_synchronizepretime", function()

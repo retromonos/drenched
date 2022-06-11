@@ -80,8 +80,6 @@ end
 function SWEP:ShootBullets(damage, numshots, cone)
 	local owner = self:GetOwner()
 
-    owner:ViewPunch(Angle(-(self.Primary.Damage*self.Primary.NumShots*self:GetPressure())/30,0,0))
-
     if SERVER then
         for i = 0,numshots-1 do
             local ent = ents.Create(self.Projectile)
