@@ -154,7 +154,7 @@ end
 function SWEP:Think()
     local owner = self:GetOwner()
 
-    if (owner:WaterLevel() >= 1) and (owner:GetAmmoCount("water") < GAMEMODE.TankSize) and (CurTime() >= self:GetRefillStart()) then
+    if ((owner:WaterLevel() >= 1) or owner:HasWeapon("drenched_wp_bucket")) and (owner:GetAmmoCount("water") < GAMEMODE.TankSize) and (CurTime() >= self:GetRefillStart()) then
         self:SetRefilling(true)
     else
         self:SetRefilling(false)

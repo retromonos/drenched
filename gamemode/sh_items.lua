@@ -10,6 +10,7 @@ function GM:RegisterWeapon(name)
 end
 
 hook.Add("Initialize", "AddWeapons", function()
+    // Weapons
     GAMEMODE:RegisterWeapon("drenched_wp_soaker")
 	GAMEMODE:RegisterWeapon("drenched_wp_drizzle")
 	GAMEMODE:RegisterWeapon("drenched_wp_lightning")
@@ -17,7 +18,10 @@ hook.Add("Initialize", "AddWeapons", function()
     GAMEMODE:RegisterWeapon("drenched_wp_cloudburst")
     GAMEMODE:RegisterWeapon("drenched_wp_deluge")
 
+    // Support Items
     GAMEMODE:RegisterWeapon("drenched_wp_towel")
+    GAMEMODE:RegisterWeapon("drenched_wp_bucket")
+    GAMEMODE:RegisterWeapon("drenched_wp_wetsuit")
 end)
 
 local meta = FindMetaTable("Player")

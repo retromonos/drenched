@@ -38,7 +38,15 @@ function GM:PlayerSpawn( ply )
 	self:DoLoadout(ply)
 
     ply:SetModel(player_manager.TranslatePlayerModel(ply:GetInfo("cl_playermodel")))
-	ply:SetupHands() 
+	ply:SetupHands()
+
+	local healthboost = 0
+	if ply:HasWeapon("drenched_wp_wetsuit") then
+		healthboost = 25
+	end
+
+	ply:SetMaxHealth(100 + healthboost)
+	ply:SetHealth(ply:GetMaxHealth())
 end
 
 function GM:DoLoadout(ply)
@@ -59,6 +67,10 @@ hook.Add("EntityTakeDamage", "DamageEffects", function(ent, dmginfo)
 		if dmginfo:GetAttacker():IsPlayer() then
 			local killed = dmginfo:GetDamage() >= ent:Health()
 
+			if dmginfo:GetInflictor().NoPressure then
+				dmginfo:SetDamage(dmginfo:GetInflictor().Primary.Damage)
+			end
+
 			net.Start("drenched_hitmarker")
 				net.WriteInt(dmginfo:GetDamage(), 9)
 				net.WriteBool(killed)
@@ -76,6 +88,7 @@ hook.Add("EntityTakeDamage", "DamageEffects", function(ent, dmginfo)
 				net.Start("drenched_hurtflash")
 				net.Send(ent)
 			end
+
 		end
 	end
 end)
@@ -113,7 +126,7 @@ function GM:Tick()
 				local healdelay = 0.15
 				if towel then
 					healtime = 3
-					healdelay = 0.075
+					healdelay = 0.06
 				end
 
 				if ((pl.LastDamaged + healtime) <= CurTime()) and (pl.NextHeal <= CurTime()) then

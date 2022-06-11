@@ -21,7 +21,7 @@ util.AddNetworkString("drenched_hitmarker")
 util.AddNetworkString("drenched_synchronizetime")
 util.AddNetworkString("drenched_synchronizepretime")
 
-CreateConVar("drenched_scorelimit", 15)
+CreateConVar("drenched_scorelimit", 25)
 CreateConVar("drenched_roundtime", 300)
 CreateConVar("drenched_roundlimit", 3)
 

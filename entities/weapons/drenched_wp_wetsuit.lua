@@ -1,7 +1,7 @@
 SWEP.Base = "drenched_wp_basemelee"
 
-SWEP.PrintName = "Towel"		
-SWEP.Description = "Passively increases drying speed."
+SWEP.PrintName = "Wet Suit"		
+SWEP.Description = "+25 maximum health."
 
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true

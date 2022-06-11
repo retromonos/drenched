@@ -28,7 +28,7 @@ if CLIENT then
 end
 
 SWEP.Primary.Delay = 0.25
-SWEP.Primary.Damage = 10
+SWEP.Primary.Damage = 16
 
 SWEP.FireSound = "weapons/iceaxe/iceaxe_swing1.wav"
 
