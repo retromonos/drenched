@@ -98,5 +98,11 @@ net.Receive("drenched_synchronizepretime", function()
 	GAMEMODE.PreRoundTimer = servertime
 end)
 
+net.Receive("drenched_synchronizewait", function()
+	local bool = net.ReadBool()
+
+	GAMEMODE.WaitingForPlayers = bool
+end)
+
 --killicon.Add("proj_basewater", "killicons/proj_basewater", Color(255,255,255))
 --killicon.Add("drenched_wp_noodle", "killicons/drenched_wp_noodle", Color(255,255,255))

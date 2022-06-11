@@ -37,7 +37,7 @@ if CLIENT then
 end
 
 SWEP.Primary.Delay = 0.3
-SWEP.Primary.Damage = 35
+SWEP.Primary.Damage = 40
 SWEP.Cone = 1 // in degrees of deviation
 SWEP.AmmoUsage = 25
 SWEP.FireSound = "weapons/ar2/fire1.wav"
@@ -45,7 +45,7 @@ SWEP.FireSound = "weapons/ar2/fire1.wav"
 SWEP.PressureEffectsDamage = true
 SWEP.PressureDamageTaper = 0.8
 
-SWEP.Velocity = 2500
-SWEP.PressureDrain = 0.15
+SWEP.Velocity = 2700
+SWEP.PressureDrain = 0.1
 
 SWEP.Zoom = 1.5

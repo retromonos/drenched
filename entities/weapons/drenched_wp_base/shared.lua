@@ -27,6 +27,8 @@ SWEP.Projectile = "proj_basewater"
 SWEP.Velocity = 1000
 SWEP.Gravity = true
 
+SWEP.GroundZ = 0
+
 SWEP.DoHurtFlash = true
 SWEP.PressureDamageTaper = 1
 SWEP.PressureEffectsDamage = false
@@ -185,30 +187,16 @@ function SWEP:Think()
 
     if (not owner:OnGround()) and (not (owner:WaterLevel() > 1)) and owner:KeyDown(IN_JUMP) and (owner:GetAmmoCount("water") >= 2) then
         local up = owner:GetUp()
-        owner:SetVelocity(12 * Vector(math.Clamp(up.x,-0.15,0.15),math.Clamp(up.y,-0.15,0.15),math.max(up.z,0.9)))
+        owner:SetVelocity((12 * (1-((math.max(self:GetPos().z - self.GroundZ,0)/200)*0.4))) * Vector(math.Clamp(up.x,-0.1,0.1),math.Clamp(up.y,-0.1,0.1),math.max(up.z,0.9)))
         owner:SetAmmo(math.max(owner:GetAmmoCount("water") - 2, 0), "water")
 
         self.JetpackSound:PlayEx(0.6, 75)
 
-        if CLIENT then
-            local pos = Vector(owner:GetPos().x,owner:GetPos().y,owner:GetPos().z+48)
-
-            local emitter = ParticleEmitter( pos )
-            emitter:SetNearClip( 48, 64 )
-
-            local particle = emitter:Add( "particle/smokesprites_0001", pos )
-                particle:SetColor( 220,220,220 )
-                particle:SetDieTime( 1.5 )
-                particle:SetStartAlpha( 100 )
-                particle:SetEndAlpha( 50 )
-                particle:SetStartSize( 16 )
-                particle:SetEndSize( 16 )
-                particle:SetRollDelta( math.Rand( -5, 5 ) )
-            emitter:Finish() emitter = nil collectgarbage("step", 64)
-        end
-
+        self:SetJetpack(true)
     else
         self.JetpackSound:Stop()
+        self.GroundZ = self:GetPos().z
+        self:SetJetpack(false)
     end
 end
 
@@ -309,4 +297,12 @@ end
 
 function SWEP:GetZoomed()
     return self:GetDTBool(1)
+end
+
+function SWEP:SetJetpack(bool)
+    self:SetDTBool(2,bool)
+end
+
+function SWEP:GetJetpack()
+    return self:GetDTBool(2)
 end

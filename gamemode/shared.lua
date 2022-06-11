@@ -3,10 +3,14 @@ GM.Author = "Liverneck"
 GM.Email = "N/A"
 GM.Website = "N/A"
 
+CreateConVar("drenched_scorelimit", 25)
+CreateConVar("drenched_roundtime", 300)
+CreateConVar("drenched_roundlimit", 3)
+
+GM.WaitingForPlayers = true
+
 function GM:Initialize()
 	self.RoundEnd = CurTime() + self.WaitTime
-
-	self.WaitingForPlayers = true
 end
 
 function GM:PlayerInitialSpawn(ply)
@@ -24,6 +28,10 @@ function GM:PlayerInitialSpawn(ply)
 
 	net.Start("drenched_synchronizetime")
 		net.WriteFloat(self.RoundEnd)
+	net.Send(ply)
+
+	net.Start("drenched_synchronizewait")
+		net.WriteBool(self.WaitingForPlayers)
 	net.Send(ply)
 end
 
@@ -134,6 +142,29 @@ function GM:Tick()
 					pl.NextHeal = CurTime() + healdelay
 				end
 			end
+
+
+			if CLIENT then
+
+				if pl:Alive() and pl:GetActiveWeapon():IsValid() and pl:GetActiveWeapon():GetJetpack() then
+					local pos = Vector(pl:GetPos().x,pl:GetPos().y,pl:GetPos().z+48)
+		
+					local emitter = ParticleEmitter( pos )
+					emitter:SetNearClip( 48, 64 )
+					
+					local particle = emitter:Add( "particle/smokesprites_0001", pos )
+						particle:SetColor( 220,220,220 )
+						particle:SetDieTime( 1.5 )
+						particle:SetStartAlpha( 100 )
+						particle:SetEndAlpha( 50 )
+						particle:SetStartSize( 16 )
+						particle:SetEndSize( 16 )
+						particle:SetRollDelta( math.Rand( -5, 5 ) )
+					emitter:Finish() emitter = nil collectgarbage("step", 64)
+				end
+
+			end
+		
 		end
 
 		if CurTime() >= self.RoundEnd and (not self.RoundOver) then
@@ -155,6 +186,7 @@ end
 function GM:RestartGame()
 	self.RoundOver = false
 	self.Winner = nil
+	self.WaitingForPlayers = false
 
 	if SERVER then
 		self.RoundEnd = CurTime() + GetConVar("drenched_roundtime"):GetInt() + self.PreRoundTime
@@ -181,6 +213,7 @@ end
 
 function GM:PreRoundStart()
 	local allplayers = player.GetAll()
+	self.WaitingForPlayers = false
 	
 	if SERVER then
 
@@ -205,7 +238,7 @@ function GM:PreRoundStart()
 	timer.Simple(self.PreRoundTime, function()
 		if allplayers then
 			for i, pl in ipairs(allplayers) do
-				if SERVER then
+				if SERVER and pl:IsValid() then
 					pl:UnLock()
 
 					net.Start("drenched_synchronizetime")

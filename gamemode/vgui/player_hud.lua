@@ -40,9 +40,11 @@ net.Receive("drenched_hitmarker", function()
         dmg = LocalPlayer().HitmarkDmg + dmg
     end
 
-    LocalPlayer().HitmarkTime = CurTime() + (LocalPlayer():GetActiveWeapon().Primary.Delay*1.5) + 0.1 + (killed and 0.3 or 0)
-    LocalPlayer().HitmarkDmg = dmg
-    LocalPlayer().HitmarkKill = killed
+    if LocalPlayer():GetActiveWeapon():IsValid() then
+        LocalPlayer().HitmarkTime = CurTime() + (LocalPlayer():GetActiveWeapon().Primary.Delay*1.5) + 0.1 + (killed and 0.3 or 0)
+        LocalPlayer().HitmarkDmg = dmg
+        LocalPlayer().HitmarkKill = killed
+    end
 
     if killed then
         surface.PlaySound("buttons/button10.wav")
@@ -208,9 +210,11 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
         end
     end
 
+    --[[
     if GAMEMODE.WaitingForPlayers then
         draw.SimpleText("Waiting for players: "..string.ToMinutesSeconds(math.max(GAMEMODE.RoundEnd - CurTime(),0)), "Drenched36", ScrW()/2, ScrH()/3, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
+    ]]
 
     // ****************
     // END OF ROUND HUD

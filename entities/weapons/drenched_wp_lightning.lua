@@ -47,8 +47,8 @@ SWEP.FireSound = "weapons/ar2/fire1.wav"
 
 SWEP.PressureEffectsDamage = true
 SWEP.PressureDamageTaper = 0.75
-SWEP.Velocity = 3800
-SWEP.PumpAmount = 0.06
+SWEP.Velocity = 4200
+SWEP.PumpAmount = 0.08
 SWEP.PressureDrain = 0.85
 SWEP.MinimumPressure = 0.15
 SWEP.AmmoUsage = 40
