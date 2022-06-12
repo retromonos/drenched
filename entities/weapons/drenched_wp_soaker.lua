@@ -51,7 +51,6 @@ SWEP.Primary.Damage = 7
 SWEP.Primary.NumShots = 2
 SWEP.Cone = 3 // in degrees of deviation
 SWEP.AmmoUsage = 5
-SWEP.FireSound = "weapons/ar2/fire1.wav"
 
 SWEP.Zoom = 1.1
 

@@ -7,10 +7,12 @@ CreateConVar("drenched_scorelimit", 25)
 CreateConVar("drenched_roundtime", 300)
 CreateConVar("drenched_roundlimit", 3)
 
-GM.WaitingForPlayers = true
-
 function GM:Initialize()
 	self.RoundEnd = CurTime() + self.WaitTime
+
+	if SERVER then
+		self.WaitingForPlayers = true
+	end
 end
 
 function GM:PlayerInitialSpawn(ply)
@@ -199,6 +201,10 @@ function GM:RestartGame()
 				net.Start("drenched_synchronizetime")
 					net.WriteFloat(self.RoundEnd)
 					net.WriteEntity(self.Winner)
+				net.Send(pl)
+
+				net.Start("drenched_synchronizewait")
+					net.WriteBool(self.WaitingForPlayers)
 				net.Send(pl)
 
 				pl:Spawn()

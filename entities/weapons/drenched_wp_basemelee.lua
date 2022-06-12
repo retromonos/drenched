@@ -38,25 +38,45 @@ function SWEP:PrimaryAttack()
 
 	local owner = self:GetOwner()
 
-	self:FireBullets({
-		Num = 1,
-		Src = owner:GetShootPos(),
-		Dir = owner:GetAimVector(),
-		Spread = Vector(0, 0, 0),
-		Tracer = 0,
-		TracerName = nil,
-		AmmoType = self.Primary.Ammo,
-		Force = self.Primary.Damage * 0.1,
-		Damage = self.Primary.Damage,
-		Distance = self.Range, 
-		Callback = self.HitCallback
-	})
+	self:MeleeTrace(self.Primary.Damage)
 
 	self:EmitSound(self.FireSound, 75, 100, 0.5)
     self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
     self:SendWeaponAnim(ACT_VM_MISSCENTER)
 end
 
+function SWEP:MeleeTrace(damage)
+	local owner = self:GetOwner()
+
+	owner:LagCompensation( true )
+
+    local tr = util.TraceLine({
+		start = owner:EyePos(),
+		endpos = owner:EyePos() + owner:EyeAngles():Forward() * self.Range,
+		filter = owner
+	})
+
+	owner:LagCompensation( false )
+
+
+	local ent = tr.Entity
+
+	if ent:IsValid() then
+		if SERVER then
+			ent:TakeDamage(damage,owner,self)
+		end
+	end
+
+	if tr.Hit and (not tr.HitSky) then
+		local effectdata = EffectData()
+		effectdata:SetOrigin( tr.HitPos + tr.HitNormal )
+		effectdata:SetNormal( tr.HitNormal )
+		effectdata:SetSurfaceProp( tr.SurfaceProps)
+		effectdata:SetHitBox(tr.HitBox )
+		effectdata:SetEntity(ent)
+		util.Effect( "Impact", effectdata )
+	end
+end
 
 function SWEP:CanPrimaryAttack()
 

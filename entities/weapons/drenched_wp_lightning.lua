@@ -44,7 +44,6 @@ SWEP.Primary.Damage = 65
 SWEP.Cone = 0.5 // in degrees of deviation
 SWEP.AmmoUsage = 5
 SWEP.FireSound = "weapons/ar2/fire1.wav"
-
 SWEP.PressureEffectsDamage = true
 SWEP.PressureDamageTaper = 0.75
 SWEP.Velocity = 4200

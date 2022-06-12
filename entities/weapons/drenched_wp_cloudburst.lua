@@ -40,7 +40,6 @@ SWEP.Primary.Delay = 0.3
 SWEP.Primary.Damage = 40
 SWEP.Cone = 1 // in degrees of deviation
 SWEP.AmmoUsage = 25
-SWEP.FireSound = "weapons/ar2/fire1.wav"
 
 SWEP.PressureEffectsDamage = true
 SWEP.PressureDamageTaper = 0.8

@@ -23,6 +23,7 @@ function ENT:OnRemove()
 
 	local pos = self:GetPos()
 
+	--[[
 	local emitter = ParticleEmitter( pos )
 	emitter:SetNearClip( 48, 64 )
 
@@ -35,6 +36,12 @@ function ENT:OnRemove()
 		particle:SetEndSize( 16 )
 		particle:SetRollDelta( math.Rand( -5, 5 ) )
 	emitter:Finish() emitter = nil collectgarbage("step", 64)
+	]]
+
+	local effectdata = EffectData()
+		effectdata:SetOrigin(pos)
+		effectdata:SetScale(2)
+		util.Effect( "watersplash", effectdata )
 	
 end
 

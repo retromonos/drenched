@@ -21,7 +21,7 @@ SWEP.Primary.Damage 		= 10
 SWEP.Primary.NumShots = 1
 SWEP.Cone = 3 // in degrees of deviation
 SWEP.AmmoUsage = 2
-SWEP.FireSound = "weapons/ar2/fire1.wav"
+SWEP.FireSound = "ambient/water/water_splash1.wav"
 
 SWEP.Projectile = "proj_basewater"
 SWEP.Velocity = 1000
@@ -32,8 +32,8 @@ SWEP.GroundZ = 0
 SWEP.DoHurtFlash = true
 SWEP.PressureDamageTaper = 1
 SWEP.PressureEffectsDamage = false
-
-SWEP.TrailColor = Color(163,253,253,100)
+--Color(163,253,253,100)
+SWEP.TrailColor = Color(213,255,255,100)
 
 SWEP.PumpAmount = 0.05
 SWEP.PumpDelay = 0.15
@@ -124,7 +124,7 @@ function SWEP:PrimaryAttack()
 
 	if not self:CanPrimaryAttack() then return end
 
-	self:EmitSound(self.FireSound, 75, 60, 0.5)
+	self:EmitSound(self.FireSound, 100, 100, 100)
 	self:ShootBullets(self.Primary.Ammo, self.Primary.NumShots, self:GetConeDeg())
 	self:GetOwner():RemoveAmmo(self.AmmoUsage, self.Primary.Ammo)
 
@@ -174,7 +174,7 @@ function SWEP:Think()
 
     if owner:KeyDown(IN_RELOAD) and (self:GetPressure() < 1) and (self:GetNextPump() <= CurTime()) then
         self:SetPressure(math.min(self:GetPressure() + self.PumpAmount,1))
-        self:EmitSound("weapons/crossbow/fire1.wav",75,50+(self:GetPressure()*30),0.8)
+        self:EmitSound("weapons/crossbow/fire1.wav",75,50+(self:GetPressure()*30),0.6)
         self:SetNextPump(CurTime() + self.PumpDelay)
         self:SetNextPrimaryFire(CurTime()+0.5)
     end
@@ -187,11 +187,9 @@ function SWEP:Think()
 
     if (not owner:OnGround()) and (not (owner:WaterLevel() > 1)) and owner:KeyDown(IN_JUMP) and (owner:GetAmmoCount("water") >= 2) then
         local up = owner:GetUp()
+        self.JetpackSound:PlayEx(0.6, 75)
         owner:SetVelocity((12 * (1-((math.max(self:GetPos().z - self.GroundZ,0)/200)*0.4))) * Vector(math.Clamp(up.x,-0.1,0.1),math.Clamp(up.y,-0.1,0.1),math.max(up.z,0.9)))
         owner:SetAmmo(math.max(owner:GetAmmoCount("water") - 2, 0), "water")
-
-        self.JetpackSound:PlayEx(0.6, 75)
-
         self:SetJetpack(true)
     else
         self.JetpackSound:Stop()

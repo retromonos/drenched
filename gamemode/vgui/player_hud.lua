@@ -47,11 +47,11 @@ net.Receive("drenched_hitmarker", function()
     end
 
     if killed then
-        surface.PlaySound("buttons/button10.wav")
+        surface.PlaySound("weapons/grenade/tick1.wav")
         LocalPlayer().KillNoticeName = name
         LocalPlayer().KillNoticeTime = CurTime() + 2
     else
-        surface.PlaySound("buttons/button9.wav")
+        surface.PlaySound("physics/cardboard/cardboard_box_impact_bullet3.wav")
     end
 end)
 
@@ -101,8 +101,8 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
                 color = Color(255, 51, 0,150*((pl.HitmarkTime-CurTime())/(LocalPlayer():GetActiveWeapon().Primary.Delay*1.5)))   
             end
 
-            draw.RoundedBox(16,(ScrW()/2)-16,(ScrH()/2)-16,32,32,color)
-            draw.SimpleText(pl.HitmarkDmg, "Drenched24", (ScrW()/2),(ScrH()/2)-32, Color(255,255,255,255*((pl.HitmarkTime-CurTime())/(LocalPlayer():GetActiveWeapon().Primary.Delay*1.5))), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.RoundedBox(4,(ScrW()/2)-4,(ScrH()/2)-4,8,8,color)
+            draw.SimpleText(pl.HitmarkDmg, "Drenched21", (ScrW()/2),(ScrH()/2)-16, Color(255,255,255,255*((pl.HitmarkTime-CurTime())/(LocalPlayer():GetActiveWeapon().Primary.Delay*1.5))), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
 
         if pl.KillNoticeTime and pl.KillNoticeTime >= CurTime() then
@@ -210,11 +210,9 @@ hook.Add( "HUDPaint", "PlayerHUD", function()
         end
     end
 
-    --[[
     if GAMEMODE.WaitingForPlayers then
         draw.SimpleText("Waiting for players: "..string.ToMinutesSeconds(math.max(GAMEMODE.RoundEnd - CurTime(),0)), "Drenched36", ScrW()/2, ScrH()/3, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
-    ]]
 
     // ****************
     // END OF ROUND HUD

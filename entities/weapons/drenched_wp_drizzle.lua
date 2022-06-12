@@ -8,6 +8,8 @@ SWEP.ViewModel = "models/weapons/cstrike/c_pist_fiveseven.mdl"
 SWEP.WorldModel = "models/weapons/w_pist_fiveseven.mdl"
 SWEP.HoldType = "pistol"
 
+SWEP.FireSound = "ambient/water/drip2.wav"
+
 SWEP.Slot = 1
 SWEP.SlotPos = 0
 
@@ -33,7 +35,6 @@ SWEP.Primary.Delay = 0.225
 SWEP.Primary.Damage = 18
 SWEP.Cone = 1.25 // in degrees of deviation
 SWEP.AmmoUsage = 6
-SWEP.FireSound = "weapons/ar2/fire1.wav"
 
 SWEP.Velocity = 1700
 SWEP.PressureDrain = 0.07
