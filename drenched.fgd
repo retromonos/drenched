@@ -1,0 +1,7 @@
+@include "base.fgd"
+@include "halflife2.fgd"
+
+@PointClass base(Targetname, Angles, Origin) = pickup_hose : "Map pickup for the fire hose."
+[
+	respawn_time(integer) 	: "Respawn Time"	: 15		: "Time it takes to respawn this entity."
+]
