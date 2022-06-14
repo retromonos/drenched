@@ -17,7 +17,7 @@ function ENT:DrawTranslucent()
 
 	if self:GetCooldown() > CurTime() then
 		cam.Start3D2D(pos, ang, 0.5)
-			draw.SimpleText(math.ceil(self:GetCooldown() - CurTime()), "Drenched36", 0, 0, Color(255,255,255,150), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText(math.ceil(self:GetCooldown() - CurTime()), "Drenched36", 0, 0, Color(255,255,255,100), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		cam.End3D2D()
 	end
 	
@@ -36,9 +36,9 @@ function ENT:DrawTranslucent()
 	local dlight = DynamicLight(self:EntIndex())
 	if ( dlight ) and self:GetCooldown() <= CurTime() then
 		dlight.pos = Vector(pos.x,pos.y,pos.z-16)
-		dlight.r = 255
-		dlight.g = 100
-		dlight.b = 0
+		dlight.r = self.GlowColor.r
+		dlight.g = self.GlowColor.g
+		dlight.b = self.GlowColor.b
 		dlight.brightness = 4
 		dlight.Decay = 2048
 		dlight.Size = 128

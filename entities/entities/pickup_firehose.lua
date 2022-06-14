@@ -4,8 +4,7 @@ ENT.Type = "anim"
 ENT.Base = "pickup_base"
 
 function ENT:Initialize()
-	self.Cooldown = 15
-	self.Weapon = "drenched_wp_hose"
+	self.Weapon = "drenched_wp_firehose"
 
 	self:SetWeaponType(self.Weapon)
 

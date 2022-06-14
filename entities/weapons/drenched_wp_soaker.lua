@@ -54,7 +54,7 @@ SWEP.AmmoUsage = 5
 
 SWEP.Zoom = 1.1
 
-SWEP.PressureDrain = 0.015
+SWEP.PressureDrain = 0.02
 SWEP.MinimumPressure = 0.35
 
-SWEP.Velocity = 1100
+SWEP.Velocity = 1350

@@ -1,8 +1,10 @@
 ENT.Type = "anim"
 ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
 
+ENT.GlowColor = Color(255,100,0)
+ENT.SCKModelScale = 1.5
+
 function ENT:Initialize()
-	self.Cooldown = 15
 	self.Weapon = "drenched_wp_lightning"
 
 	self:SetWeaponType(self.Weapon)
@@ -62,9 +64,9 @@ function ENT:Think()
             end
         end
 
-        if pl and (not pl:HasWeapon(self:GetWeaponType())) and (self:GetCooldown() <= CurTime()) then
-            pl:Give(self:GetWeaponType())
-            self:SetCooldown(CurTime() + self.Cooldown)
+        if pl and (not pl:HasWeapon(self:GetWeaponType())) and (self:GetCooldown() <= CurTime()) and (not GAMEMODE.WaitingForPlayers) and (self:CanPickup(pl)) then
+            self:DoPickup(pl)
+            self:SetCooldown(CurTime() + (self.Cooldown or 15))
 			pl:EmitSound("ambient/energy/zap8.wav", 100, 100, 1)
         end
     end

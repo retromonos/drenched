@@ -9,3 +9,11 @@ function ENT:KeyValue(key, value)
 		self.Cooldown = value
 	end
 end
+
+function ENT:CanPickup(pl)
+	return true
+end
+
+function ENT:DoPickup(pl)
+	pl:Give(self:GetWeaponType())
+end

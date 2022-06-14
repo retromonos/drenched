@@ -6,4 +6,5 @@
 	respawn_time(integer) 	: "Respawn Time"	: 15		: "Time it takes to respawn this entity."
 ]
 
-@PointClass base(Targetname, Angles, Origin, Pickup) = pickup_hose : "Map pickup for the fire hose." []
+@PointClass base(Targetname, Angles, Origin, Pickup) = pickup_firehose : "Map pickup for the fire hose." []
+@PointClass base(Targetname, Angles, Origin, Pickup) = pickup_bottle : "Small water ammo pack" []

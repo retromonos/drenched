@@ -43,7 +43,7 @@ function ENT:RenderModels(ble, cmod)
 			model:SetAngles(ang)
 			--model:SetModelScale(v.size)
 			local matrix = Matrix()
-			local multi = cmod and 1.02 or 1.5
+			local multi = cmod and 1.02 or self.SCKModelScale
 			if (!bool) then multi = 0 end
 			matrix:Scale(v.size * multi)
 			model:EnableMatrix( "RenderMultiply", matrix )
