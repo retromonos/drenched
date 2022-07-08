@@ -113,6 +113,7 @@ function SWEP:ShootBullets(damage, numshots, cone)
                     angle:RotateAroundAxis(angle:Up(), math.Rand(-cone, cone))
 
                     ent.PreVel = angle:Forward() * (self.Velocity * self:GetPressure())
+                    phys:AddAngleVelocity(ent.PreVel/2)
                     phys:SetVelocityInstantaneous(ent.PreVel)
                 end
             end

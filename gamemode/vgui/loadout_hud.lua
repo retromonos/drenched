@@ -20,7 +20,7 @@ function GM:OpenLoadout()
         draw.RoundedBoxEx(32, 0, 0, w, h, Color(0, 183, 255,100), true, true, true, true)
         --draw.RoundedBoxEx(32, w*(1/8)-(16*screenscale), h*(1/8)-(16*screenscale), w*(3/4)+(32*screenscale),h*(3/4)+(32*screenscale), Color(0, 183, 255,150), true, true, true, true)
         draw.SimpleText("Loadout", "Drenched36", w*(1/2), 40*screenscale, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Select up to 2 guns", "Drenched18", w*(1/2), h-24, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Select up to 2 items", "Drenched18", w*(1/2), h-24, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 
     function frame:Think()

@@ -7,4 +7,5 @@
 ]
 
 @PointClass base(Targetname, Angles, Origin, Pickup) = pickup_firehose : "Map pickup for the fire hose." []
+@PointClass base(Targetname, Angles, Origin, Pickup) = pickup_balloon : "Map pickup for the water balloon." []
 @PointClass base(Targetname, Angles, Origin, Pickup) = pickup_bottle : "Small water ammo pack" []

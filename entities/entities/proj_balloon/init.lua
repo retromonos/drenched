@@ -3,11 +3,10 @@ AddCSLuaFile("cl_init.lua")
 include("shared.lua")
 
 function ENT:Initialize()
-	self:SetModel("models/Items/CrossbowRounds.mdl")
-	self:PhysicsInitSphere(1)
+	self:SetModel("models/maxofs2d/balloon_classic.mdl")
+	self:PhysicsInitSphere(3)
 	self:SetSolid(SOLID_VPHYSICS)
-	self:SetModelScale(0.3, 0)
-	self:SetColor(Color(255,0,0))
+	self:SetModelScale(0.5, 0)
 	
 	self:SetCustomCollisionCheck(true)
 	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
@@ -38,6 +37,7 @@ function ENT:Think()
 	end
 
 	if self:WaterLevel() == 3 then
+		self:Explode()
 		self:Remove()
 	end
 
@@ -59,11 +59,23 @@ function ENT:Hit(vHitPos, vHitNormal, eHitEntity, vOldVelocity)
 
 	self:SetPos(vHitPos + vHitNormal)
 
-	if eHitEntity:IsValid() then
-		eHitEntity:TakeDamage(self.ProjDamage,owner,self)
-	end
+	self:Explode()
 
 	self:SetAngles(vOldVelocity:Angle())
+end
+
+function ENT:Explode()
+	local targetCount = 0
+	for i, ent in ipairs(ents.FindInSphere(self:GetPos(),64)) do
+		if ent:IsValid() and ent:IsPlayer() then
+			targetCount = targetCount + 1
+			if ent == self:GetOwner() then
+				ent:SetVelocity(-300 * ent:GetAimVector())
+			end
+		end
+	end
+	
+	util.BlastDamage(self, self:GetOwner(), self:GetPos(), 96, self.ProjDamage/math.max(targetCount*.75,1))
 end
 
 function ENT:PhysicsCollide(data, phys)

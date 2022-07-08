@@ -72,8 +72,68 @@ net.Receive("drenched_deathscreen", function()
 end)
 
 function GM:HUDDrawTargetID()
-
 end
+
+local targetTable = {}
+
+hook.Add( "HUDDrawTargetID", "NewTargetID", function()
+    local eyepos = EyePos()
+    local eyevec = EyeVector()
+    local fadetime = 1.25
+	local tr = util.TraceLine({start = eyepos, endpos = eyepos + (eyevec * 10000), filter = LocalPlayer()})
+    local ent = tr.Entity
+
+    if ent and ent:IsValid() and ent:IsPlayer() and ent:Alive() then
+        local target = {}
+        target.Player = ent
+        target.Time = CurTime() + fadetime
+        for i, targ in ipairs(targetTable) do
+            if targ.Player and targ.Player == ent then 
+                table.remove(targetTable, i)
+            end
+        end
+
+        table.insert(targetTable, target)
+    end
+
+    for i, targ in ipairs(targetTable) do
+        
+        local pl = targ.Player
+        local t = targ.Time
+
+        local dist = LocalPlayer():GetPos():Distance(pl:GetPos())
+        
+        if pl:IsValid() and pl:Alive() and ((t > CurTime())) then
+            local b, hull = pl:GetHull()
+            if pl:Crouching() then
+                b, hull = pl:GetHullDuck()
+            end
+            local pos = pl:GetPos() + Vector(0,0,(hull.z + 8)*math.Clamp(dist/800,1,2))
+            local screenpos = pos:ToScreen()
+            local alpha = math.Clamp((t-CurTime())/(fadetime/4),0,1)
+
+            draw.RoundedBoxEx(8,screenpos.x - 48, screenpos.y, 24, 24, Color(0, 183, 255,150*alpha), true, false, true, false)
+
+            surface.SetDrawColor(50,50,50,255*alpha)
+            surface.DrawRect(screenpos.x - 24, screenpos.y+16, 64, 8)
+
+            surface.SetDrawColor(150,150,150,255*alpha)
+            surface.DrawOutlinedRect(screenpos.x - 24, screenpos.y+16, 64, 8,1)
+
+            surface.SetDrawColor(0, 183, 255,255*alpha)
+            surface.DrawRect(screenpos.x - 24, screenpos.y+16, 64*(pl:Health()/pl:GetMaxHealth()), 8)
+
+            surface.SetDrawColor(200,200,200,255*alpha)
+            surface.DrawRect(screenpos.x - 26, screenpos.y, 2, 24)
+            
+            draw.SimpleText(pl:Frags(), "Drenched21", screenpos.x-37, screenpos.y+11, Color(255,255,255,255*alpha), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText(pl:Name(), "Drenched21", screenpos.x-24, screenpos.y+6, Color(255,255,255,255*alpha), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+       
+        else
+            table.remove(targetTable, i)
+        end
+    end
+end )
 
 hook.Add( "HUDPaint", "PlayerHUD", function()
     local pl = LocalPlayer()

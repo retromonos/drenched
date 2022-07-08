@@ -75,11 +75,15 @@ hook.Add("EntityTakeDamage", "DamageEffects", function(ent, dmginfo)
 		ent.LastDamaged = CurTime()
 
 		if dmginfo:GetAttacker():IsPlayer() then
-			local killed = dmginfo:GetDamage() >= ent:Health()
-
 			if dmginfo:GetInflictor().NoPressure then
 				dmginfo:SetDamage(dmginfo:GetInflictor().Primary.Damage)
 			end
+
+			if dmginfo:GetAttacker() == ent then
+				dmginfo:SetDamage(dmginfo:GetDamage()/2)
+			end
+
+			local killed = dmginfo:GetDamage() >= ent:Health()
 
 			net.Start("drenched_hitmarker")
 				net.WriteInt(dmginfo:GetDamage(), 9)
