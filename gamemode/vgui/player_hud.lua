@@ -108,20 +108,20 @@ hook.Add( "HUDDrawTargetID", "NewTargetID", function()
             if pl:Crouching() then
                 b, hull = pl:GetHullDuck()
             end
-            local pos = pl:GetPos() + Vector(0,0,(hull.z + 8)*math.Clamp(dist/800,1,2))
+            local pos = pl:GetPos() + Vector(0,0,(hull.z + 8)*math.Clamp(dist/800,0.9,2))
             local screenpos = pos:ToScreen()
             local alpha = math.Clamp((t-CurTime())/(fadetime/4),0,1)
 
             draw.RoundedBoxEx(8,screenpos.x - 48, screenpos.y, 24, 24, Color(0, 183, 255,150*alpha), true, false, true, false)
 
             surface.SetDrawColor(50,50,50,255*alpha)
-            surface.DrawRect(screenpos.x - 24, screenpos.y+16, 64, 8)
+            surface.DrawRect(screenpos.x - 24, screenpos.y+16, 80, 8)
 
             surface.SetDrawColor(150,150,150,255*alpha)
-            surface.DrawOutlinedRect(screenpos.x - 24, screenpos.y+16, 64, 8,1)
+            surface.DrawOutlinedRect(screenpos.x - 24, screenpos.y+16, 80, 8,1)
 
             surface.SetDrawColor(0, 183, 255,255*alpha)
-            surface.DrawRect(screenpos.x - 24, screenpos.y+16, 64*(pl:Health()/pl:GetMaxHealth()), 8)
+            surface.DrawRect(screenpos.x - 24, screenpos.y+16, 80*(pl:Health()/pl:GetMaxHealth()), 8)
 
             surface.SetDrawColor(200,200,200,255*alpha)
             surface.DrawRect(screenpos.x - 26, screenpos.y, 2, 24)
